@@ -1,0 +1,43 @@
+public class 01recursion {
+
+	public String name(){
+		return "Redler,Emily";
+	}	
+
+	public static int fact(int n){
+		return factHelp(n, 1);
+	}
+
+	private static int factHelp(int n, int total){
+		if (n < 2){
+			return total;
+		}	
+		total *= n;
+		n -= 1;
+		return factHelp(n, total);
+	}
+	//guess = (n/guess+guess)/2
+	
+	public static double sqrt(double n){
+	
+		return sqrtHelp(n, n);
+	
+	}
+	
+	private static double sqrtHelp(double n, double guess){
+	
+		if (n / (guess*guess) < 1.01 && n / (guess*guess) > .99){
+			return guess;
+		}
+		guess = (n/guess+guess)/2;
+		return sqrtHelp(n,guess);
+		
+	}
+	
+	/*
+	public static void main (String[]args){
+		System.out.println(fact(4));
+		System.out.println(sqrt(100));
+	}
+	*/
+}
