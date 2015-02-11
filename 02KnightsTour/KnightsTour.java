@@ -67,7 +67,16 @@ public class KnightsTour{
     public boolean solve(int x,int y,int currentMoveNumber){
 	System.out.println(this);
 	wait(20);
+
+	if (x >= size || y >= size) {
+	    return false;
+	}
 			
+	if (board[x][y] != -1){
+	    return false;
+	}
+
+
 	if (solve(x+2,y+1,currentMoveNumber+1) ||
 	    solve(x+2,y-1,currentMoveNumber+1) || 
 	    solve(x-1,y-2,currentMoveNumber+1) || 
