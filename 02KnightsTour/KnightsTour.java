@@ -12,7 +12,6 @@ public class KnightsTour{
     //instance variable
     private int[][]board;
 
-
     //terminal specific character to move the cursor
     private String go(int x,int y){
 	return ("\033[" + x + ";" + y + "H");
@@ -32,12 +31,12 @@ public class KnightsTour{
 	//build your knights tour here...
 	for (int i = 0; i < board.length; i++) {
 	    for (int c = 0; c < board.length; c++){
-		ans += board[i][c];
+		ans += "x ";//board[i][c];
 	    }
-
+	    ans += "\n";
 	}
 
-	return hide + go(0,0) + ans + "\n" + show;
+	return hide + clear + go(0,0) + ans + "\n" + show;
     }
 
     public KnightsTour(int size){
@@ -53,12 +52,12 @@ public class KnightsTour{
     
 
     public void solve(){
-				
+	solve(0,0,0);
     }
 
 
     public void solve(int startx, int starty){
-	
+	solve(startx,starty,0);
     }
 
 
@@ -68,7 +67,7 @@ public class KnightsTour{
 	System.out.println(this);
 	wait(20);
 
-	if (x >= size || y >= size) {
+	if (x >= board.length || y >= board[0].length) {
 	    return false;
 	}
 			
@@ -76,6 +75,9 @@ public class KnightsTour{
 	    return false;
 	}
 
+	/* if (////check if solved////) {
+	    return true;
+	    }*/
 
 	if (solve(x+2,y+1,currentMoveNumber+1) ||
 	    solve(x+2,y-1,currentMoveNumber+1) || 
@@ -86,12 +88,28 @@ public class KnightsTour{
 	    solve(x+1,y-2,currentMoveNumber+1) || 
 	    solve(x+1,y+2,currentMoveNumber+1) ) {
 
+	    board[x][y] = currentMoveNumber;
+
 	    return true;
 
 	}
-	
+	System.out.println(clear);
 	return false;
     }
+
+    public static void main(String[]args){
+
+	    int size = Integer.parseInt(args[0]);
+	    if (size < 1) {
+		System.out.println("Please call the KnightsTour with an integer size greater than 0.");
+	    } else {
+
+	    KnightsTour kt = new KnightsTour(size);
+
+	    System.out.println(kt.solve(0,0,0));
+	    }
+    }
+
 
 
 }
