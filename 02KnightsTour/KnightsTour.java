@@ -91,7 +91,6 @@ public class KnightsTour{
 	    return false;
 	}
 
-
 	if (solve(x+2,y+1,currentMoveNumber+1) ||
 	    solve(x+2,y-1,currentMoveNumber+1) || 
 	    solve(x-1,y-2,currentMoveNumber+1) || 
@@ -111,15 +110,19 @@ public class KnightsTour{
     }
 
     public static void main(String[]args){
+	int size = 6;
+	try {
+	    size = Integer.parseInt(args[0]);
+	} catch (Exception e) {
+	}
 
-	int size = Integer.parseInt(args[0]);
 	if (size < 1) {
 	    System.out.println("Please call the KnightsTour with an integer size greater than 0.");
 	} else {
 
 	    KnightsTour kt = new KnightsTour(size);
 
-	    System.out.println(kt.solve(-1,0,1));
+	    kt.solve();
 
 	}
     }
