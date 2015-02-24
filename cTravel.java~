@@ -1,0 +1,63 @@
+import java.util.*;
+import java.io.*;
+
+public class cTravel {
+
+    char[][] field;
+    int numWays = 0;
+    int T;
+    int R1;
+    int C1;
+    int R2;
+    int C2;
+
+    public static int parseFileForVolume(String filename) {
+	File file;
+	Scanner read;
+	try {
+	    file = new File(filename);
+	    read = new Scanner(file);
+	} catch (Exception e) {
+	    throw new Error("File not found.");
+	}
+	ArrayList<String> lines = new ArrayList<String>();
+	while (read.hasNextLine()) {
+	    String line = read.nextLine();
+	    lines.add(line.toUpperCase());
+	}
+	String[] data = lines.get(0).split(" ");
+	int r = Integer.parseInt(data[0]);
+	int c = Integer.parseInt(data[1]);
+	int e = Integer.parseInt(data[2]);
+	int n = Integer.parseInt(data[3]);
+	int[][] elevations = new int[r][c];
+	for (int i = 0; i < r; ++i) {
+	    String[] line = lines.get(1 + i).split(" ");
+	    for (int j = 0; j < c; ++j) {
+		elevations[i][j] = Integer.parseInt(line[j]);
+	    }
+	}
+
+	public cTravel(int n, int m){
+	    field = new char[n][m];
+	}
+
+	public boolean travel(int time, int currR, int currC){
+
+	    if (field[currR][currC] == "*"){
+		return false;
+	    }
+
+	    if (time > T){
+		return false;
+	    }
+
+	    if (travel(time+1,currR+1,currC) || travel(time+1,currR,currC+1) ||
+		travel(time+1,currR-1,currC) || travel(time+1,currR,currC-1)) {
+		numWays += 1;
+		return true;
+	    }
+	}
+
+
+    }
