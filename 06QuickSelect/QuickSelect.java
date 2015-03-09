@@ -26,21 +26,21 @@ public class QuickSelect {
 	for (int c = ei; c < ary.length; c++){
 	    d[c] = ary[c];
 	}
-	System.out.println(Arrays.toString(d));
+	//	System.out.println(Arrays.toString(d));
 	int pivot = ary[r.nextInt(ei-si) + si];
-	System.out.println(pivot);
+	//	System.out.println(pivot);
 	
 	for (int x = si; x < ei; x++){
 	    if (ary[x] == pivot){
 	    } else if (ary[x] < pivot){
 		d[li] = ary[x];
-		System.out.println("d[li] " + d[li] + " li: " + li);
+		//		System.out.println("d[li] " + d[li] + " li: " + li);
 		li++;
-		System.out.println(Arrays.toString(d));
+		//		System.out.println(Arrays.toString(d));
 	    } else {
 		d[ri] = ary[x];
-		System.out.println("d[ri]: " + d[ri] + " ri: " + ri);
-		System.out.println(Arrays.toString(d));
+		//	System.out.println("d[ri]: " + d[ri] + " ri: " + ri);
+		//	System.out.println(Arrays.toString(d));
 		ri--;
 	    }
 	}
@@ -60,6 +60,7 @@ public class QuickSelect {
 	}
     }
 
+    //doesn't work yet
     public void inPlace(int si, int ei){
 	int li = si;
 	int ri = ei-1;
@@ -68,23 +69,25 @@ public class QuickSelect {
 	System.out.println(Arrays.toString(ary));
 	System.out.println("pivot: " + pivot);
 	while (li < ri){
-		if (ary[li] < pivot){
-		    hold = ary[li];
-		    System.out.println("looking at " + ary[li]);
-		    System.out.println("li hold: " + hold);
-		    // ary[li] = ary[];
-		    // ary[li] = hold;
-		    li++;
-		    System.out.println(Arrays.toString(ary));
-		} else if (ary[li] > pivot){
-		    hold = ary[ri];
-		    System.out.println("looking at " + ary[li]);
-		    System.out.println("ri hold: " + hold);
-		    ary[ri] = ary[li];
-		    ary[li] = hold;
-		    ri--;
-		    System.out.println(Arrays.toString(ary));
-		
+	    System.out.println("li: " + li + "  ri: " + ri);
+	    if (ary[li] < pivot){
+		hold = ary[li];
+		System.out.println("looking at " + ary[li]);
+		System.out.println("li hold: " + hold);
+		// ary[li] = ary[];
+		// ary[li] = hold;
+		li++;
+		System.out.println(Arrays.toString(ary));
+	    } else if (ary[li] > pivot){
+		hold = ary[ri];
+		System.out.println("looking at " + ary[li]);
+		System.out.println("ri hold: " + hold);
+		ary[ri] = ary[li];
+		ary[li] = hold;
+		ri--;
+		System.out.println(Arrays.toString(ary));		
+	    } else {
+		li++;
 	    }
 	}
     	ary[ri] = pivot;
@@ -106,7 +109,6 @@ public class QuickSelect {
     }
 
     public int select(int n){
-	n+=1;
 	return partition(n, 0, ary.length - 1);
     }
 
@@ -127,8 +129,10 @@ public class QuickSelect {
 
 	System.out.println(qs.toString());
 	//	partition(a,0,l);
-	qs.inPlace(0,l);
-	//	System.out.println(qs.select(5));
+	//	qs.inPlace(0,l);
+	System.out.println(qs.select(5));
+	//	System.out.println(qs.select(0));
+	System.out.println(qs.select(9));
 	//	System.out.println(qs.toString());
 	//	System.out.println(Arrays.toString(a));
     }
