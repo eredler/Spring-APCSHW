@@ -62,18 +62,17 @@ public class Sorts {
 
     //
     //
-    //works but returns n+1th value if start counting from 0
+    //works with all cases except n = a.length-1
     public static int inPlace(int n, int si, int ei){
 	int li = si;
 	int ri = ei-1;
 	int hold;
 	int pivot = ary[r.nextInt(ei-si) + si];
 	System.out.println(Arrays.toString(ary));
-	//	System.out.println("pivot: " + pivot);
+	System.out.println("pivot: " + pivot);
 	while (li < ri){
 	    //	    System.out.println("li: " + li + "  ri: " + ri);
 	    if (ary[li] < pivot){
-		hold = ary[li];
 		//	System.out.println("looking at " + ary[li]);
 		//	System.out.println("li hold: " + hold);
 		// ary[li] = ary[];
@@ -97,10 +96,10 @@ public class Sorts {
 	    }
 	}
 
-	if (li == n-1){
+	if (li == n){
 	    return ary[li];
 	}
-	else if (li < n-1){
+	else if (li < n){
 	    return inPlace(n, li, ei);
 	}else{
 	    return inPlace(n, si, li);
@@ -124,7 +123,8 @@ public class Sorts {
     }
 
     //
-    //weird with some cases (0,10) and gives n-1th place (if start counting from 0)
+    //weird with some cases (eg len of list -1)
+    //
     //select using partition
     //
     public int selectP(int n){
@@ -132,12 +132,14 @@ public class Sorts {
     }
 
     //also weird with some cases
+    //
     //select using inPlace
     //
     public static int selectIP(int n){
 	return inPlace(n, 0, ary.length - 1);
     }
 
+    /*
     // doesn't compile
     //
     // should only have 1 argument: int[]    
@@ -154,10 +156,10 @@ public class Sorts {
 	} else {
 	    //   return a;
 	}
-    }
+	}*/
 
     public static void main(String[]args){
-	int l = 10;
+	int l = 11;
 	int[] a = new int[l];
 
 	for (int i = 0; i < l; i++){
@@ -169,14 +171,14 @@ public class Sorts {
 	    }
 	}
 
-	Sorts qs = new Sorts(a,10);
+	Sorts qs = new Sorts(a,l);
 
 	System.out.println(qs.toString());
 	//	partition(a,0,l);
-	System.out.println(quickSort(a));
-	//	System.out.println(qs.selectP(5));
-	//	System.out.println(qs.select(5));
-	//System.out.println(qs.select(0));
+	//	System.out.println(quickSort(a));
+	//System.out.println(qs.selectP(5));
+	//	System.out.println(qs.selectIP(5));
+	//	System.out.println(qs.selectIP(10));
 	//	System.out.println(qs.select(6));
 	//	System.out.println(qs.toString());
 	//	System.out.println(Arrays.toString(a));
