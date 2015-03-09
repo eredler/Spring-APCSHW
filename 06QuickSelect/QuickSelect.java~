@@ -43,18 +43,30 @@ public class QuickSelect {
 	int ri = ei-1;
 	int hold;
 	int pivot = ary[r.nextInt(ei-si) + si];
-
-	for (int x = si; x < ei; x++){
-	    if (ary[x] < pivot){
-		hold = ary[li];
-		ary[li] = ary[x];
-		ary[x] = hold;
-	    } else if (ary[x] > pivot){
-		hold = ary[ri];
-		ary[ri] = ary[x];
-		ary[x] = hold;
+	System.out.println(Arrays.toString(ary));
+	System.out.println("pivot: " + pivot);
+	while (li < ri){
+		if (ary[li] < pivot){
+		    hold = ary[li];
+		    System.out.println("looking at " + ary[li]);
+		    System.out.println("li hold: " + hold);
+		    // ary[li] = ary[];
+		    // ary[li] = hold;
+		    li++;
+		    System.out.println(Arrays.toString(ary));
+		} else if (ary[li] > pivot){
+		    hold = ary[ri];
+		    System.out.println("looking at " + ary[li]);
+		    System.out.println("ri hold: " + hold);
+		    ary[ri] = ary[li];
+		    ary[li] = hold;
+		    ri--;
+		    System.out.println(Arrays.toString(ary));
+		
 	    }
 	}
+    	ary[ri] = pivot;
+	System.out.println(Arrays.toString(ary));
     }
 
 
@@ -82,7 +94,8 @@ public class QuickSelect {
 	}
 
 	System.out.println(Arrays.toString(a));
-	partition(a,0,l);
+	//	partition(a,0,l);
+	inPlace(a,0,l);
 	//	System.out.println(Arrays.toString(a));
     }
 
