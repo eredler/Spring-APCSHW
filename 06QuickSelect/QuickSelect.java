@@ -50,17 +50,19 @@ public class QuickSelect {
 
 	ary = d;
 
-	if (li == n - 1){
+	if (li == n-1){
 	    return d[li];
 	}
-	else if (li < n - 1){
+	else if (li < n-1){
 	    return partition(n, li, ei);
 	}else{
 	    return partition(n, si, li);
 	}
     }
 
-    //doesn't work yet
+    //
+    //
+    //doesn't work yet...
     public void inPlace(int si, int ei){
 	int li = si;
 	int ri = ei-1;
@@ -90,7 +92,7 @@ public class QuickSelect {
 		li++;
 	    }
 	}
-    	ary[ri] = pivot;
+	ary[ri] = pivot;
 	System.out.println(Arrays.toString(ary));
     }
 
@@ -108,6 +110,7 @@ public class QuickSelect {
 	return Arrays.toString(ary);
     }
 
+    //weird with some cases (0,10) and gives n-1th place (if start counting from 0)
     public int select(int n){
 	return partition(n, 0, ary.length - 1);
     }
@@ -130,9 +133,9 @@ public class QuickSelect {
 	System.out.println(qs.toString());
 	//	partition(a,0,l);
 	//	qs.inPlace(0,l);
-	System.out.println(qs.select(5));
-	//	System.out.println(qs.select(0));
-	System.out.println(qs.select(9));
+	//	System.out.println(qs.select(5));
+	//System.out.println(qs.select(0));
+	System.out.println(qs.select(10));
 	//	System.out.println(qs.toString());
 	//	System.out.println(Arrays.toString(a));
     }
