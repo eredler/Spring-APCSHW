@@ -60,52 +60,70 @@ public class Sorts {
 	}
     }
 
+    // to make sure index != 0 because it doesn't work when index is 0
+    public static int checkIndex(int i, int ei, int si){
+	if (i == 0){
+	    return r.nextInt(ei-si) + si;
+	} 
+	return i;
+    }
+
     //
     //
     //works with all cases except n = a.length-1
-    public static int inPlace(int n, int si, int ei){
+    //
+    //when smallest number is chosen as pivot, doesn't work
+    //
+    public static int[] inPlace(int si, int ei){
 	int li = si;
 	int ri = ei-1;
 	int hold;
+	int index = checkIndex(r.nextInt(ei-si) + si,ei,si);	
 	int pivot = ary[r.nextInt(ei-si) + si];
 	System.out.println(Arrays.toString(ary));
 	System.out.println("pivot: " + pivot);
 	while (li < ri){
 	    //	    System.out.println("li: " + li + "  ri: " + ri);
 	    if (ary[li] < pivot){
-		//	System.out.println("looking at " + ary[li]);
+		System.out.println("li<p looking at " + ary[li]);
 		//	System.out.println("li hold: " + hold);
 		// ary[li] = ary[];
 		// ary[li] = hold;
 		li++;
-		//		System.out.println(Arrays.toString(ary));
+		System.out.println(Arrays.toString(ary));
 	    } else if (ary[li] > pivot){
 		hold = ary[ri];
-		//	System.out.println("looking at " + ary[li]);
-		//	System.out.println("ri hold: " + hold);
+		System.out.println("li>p looking at " + ary[li]);
+		//System.out.println("ri hold: " + hold);
 		ary[ri] = ary[li];
 		ary[li] = hold;
 		ri--;
-		//		System.out.println(Arrays.toString(ary));		
+		System.out.println(Arrays.toString(ary));		
 	    } else {
 		hold = ary[ri];
 		ary[ri] = ary[li];
 		ary[li] = hold;
-		//	ri--;
-		
+		//	ri--;	
 	    }
 	}
 
-	if (li == n){
+	/*	if (li == n){
 	    return ary[li];
 	}
 	else if (li < n){
 	    return inPlace(n, li, ei);
 	}else{
 	    return inPlace(n, si, li);
-	}
+	    }*/
 	//	ary[ri] = pivot;
 	//System.out.println(Arrays.toString(ary));
+	int[] d;
+	if (si == ri || li == ei){
+	    return ary;
+	}
+	d = inPlace(si, ri);
+	d = inPlace(li, ei);
+	return d;
     }
 
 
@@ -135,29 +153,18 @@ public class Sorts {
     //
     //select using inPlace
     //
-    public static int selectIP(int n){
-	return inPlace(n, 0, ary.length - 1);
+    public static int[] selectIP(int n){
+	return inPlace(0, ary.length - 1);
     }
 
-    /*
+    
     // doesn't compile
     //
     // should only have 1 argument: int[]    
-    public static void quickSort(int[] a, int li, int ei){
-	int where = a.length/2;
-	int x = a[where];
-	if (a.length/2 >= 1){	
-	    // (ei-li)/2
-	    //           |
-	    //           |  selectIP() returns an int, argument supposed to be int[]
-	    //           V
-	    quickSort(selectIP(l.length/2), li, where);
-	    quickSort(selectIP(l.length/2), where, ei);
-	} else {
-	    //   return a;
-	}
-	}*/
-
+    public static int[] quickSort(int[] a){
+	return inPlace(0,a.length);
+    }
+    
     public static void main(String[]args){
 	int l = 11;
 	int[] a = new int[l];
@@ -175,9 +182,10 @@ public class Sorts {
 
 	System.out.println(qs.toString());
 	//	partition(a,0,l);
-	//	System.out.println(quickSort(a));
+	System.out.println(Arrays.toString(quickSort(a)));
+	
 	//System.out.println(qs.selectP(5));
-	//	System.out.println(qs.selectIP(5));
+	//	System.out.println(qs.selectIP(0));
 	//	System.out.println(qs.selectIP(10));
 	//	System.out.println(qs.select(6));
 	//	System.out.println(qs.toString());
