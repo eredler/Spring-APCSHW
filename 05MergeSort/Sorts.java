@@ -62,16 +62,25 @@ public class Sorts {
     }
 
     public static void main(String[]args){
-	int n = 100000;
+	int n = 50000000;
 	int[] a = new int[n];
 	Random r = new Random();
 
 	for (int i = 0; i < n; i++){
 	    a[i] = r.nextInt(20)+1;
+	}	
+
+	try {
+	    int type = Integer.parseInt(args[0]);
+	    if (type == 0){
+		Arrays.sort(a);
+	    } else {
+		mergeSort(a);
+	    }
+	} catch (IndexOutOfBoundsException e){
+	    
+	   
 	}
-	
-	//	System.out.println(toString(a));
-	//	System.out.println(toString(mergeSort(a)));
     }
 
 }
