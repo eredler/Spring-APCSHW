@@ -1,0 +1,27 @@
+public class MyLinkedList {
+
+    private LNode head;
+    private LNode current;
+
+    public void setHead(LNode h){
+	head = h;
+    }
+    
+    public LNode getHead(){
+	return head;
+    }
+
+    public void setCurrent(LNode c){
+	current = c;
+    }
+
+    public LNode getCurrent(){
+	return current;
+    }
+
+    public String toString(){
+	return s.getHead().toString();
+    }
+
+
+}
