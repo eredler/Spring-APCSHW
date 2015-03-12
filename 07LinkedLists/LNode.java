@@ -5,6 +5,7 @@ public class LNode {
 
     public LNode(int v){
 	setValue(v);
+	setNext(null);
     }
 
     public LNode(int v, LNode n){
