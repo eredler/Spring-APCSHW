@@ -4,14 +4,27 @@ public class MyLinkedList {
 
     private LNode head;
     private LNode current;
+    private LNode tail;
+
+    public int size = 1;
 
     public MyLinkedList(LNode h, LNode c){
 	setHead(h);
+	setCurrent(c);
+	while (current.getNext() != null){
+	    setCurrent(current.getNext());
+	}
+	setTail(getCurrent());
 	setCurrent(c);
     }
 
     public MyLinkedList(LNode h){
 	setHead(h);
+	setCurrent(h);
+	while (current.getNext() != null){
+	    setCurrent(current.getNext());
+	}
+	setTail(getCurrent());
 	setCurrent(h);
     }
 
@@ -31,6 +44,14 @@ public class MyLinkedList {
 	return current;
     }
 
+    public void setTail(LNode t){
+	tail = t;
+    }
+
+    public LNode getTail(){
+	return tail;
+    }
+
     public int get(int index){
 	setCurrent(head);
 	try{
@@ -44,16 +65,14 @@ public class MyLinkedList {
 	}
     }
 
+    // doesn't work
     public boolean add(int value){
-	setCurrent(head);
-	while (current.getNext() != null){
-	    setCurrent(current.getNext());
-	}
-	current.setNext(new LNode(value));
-	System.out.println("yo");
+	tail.setNext(new LNode(value));
+	setTail(tail.getNext());
 	return true;
     }
 
+    // adds to end 
     public void add(int index, int value){
 	try {
 	    setCurrent(head);
@@ -62,6 +81,7 @@ public class MyLinkedList {
 		index--;
 	    }
 	    current.setNext(new LNode(value,current.getNext()));
+	    size++;
 	} catch (IndexOutOfBoundsException e){
 	    throw new IndexOutOfBoundsException();
 	}
@@ -70,25 +90,31 @@ public class MyLinkedList {
     public String toString(){
 	setCurrent(head);
 	String ans = "[ " + getCurrent().getValue();
-	while (current.getNext() != null){
-	    ans += ", " + current.getNext().getValue();
-	    setCurrent(current.getNext());
+	if (head.getNext() != null){
+	    setCurrent(head.getNext());
+	    while (current.getNext() != null){
+		ans += ", " + current.getValue();
+		setCurrent(current.getNext());
+	    }
 	}
 	ans += " ]";
 	return ans;
     }
 
-    // remove(int index), size(), indexOf(int value)
-
-    public int size(){
-	setCurrent(head);
+    public int indexOf(int value){
 	int i = 0;
-	while (current.getNext() != null){
+	while (current.getNext().getValue() != value){
+	    if (current.getNext().getNext() == null && current.getValue() != value){
+		return -1;
+	    }
 	    i++;
 	    setCurrent(current.getNext());
 	}
-	i++;
 	return i;
+    }
+
+    public int size(){
+	return size;
     }
 	
     public int remove(){
@@ -110,7 +136,10 @@ public class MyLinkedList {
 		index--;
 	    }
 	    //fix
-	    current.setNext(current.getNext().getNext().getValue());
+	    int hold = current.getNext().getValue();
+	    current.getNext().setNext(current.getNext().getNext());
+	    size--;
+	    return hold;
 	} catch (IndexOutOfBoundsException e){
 	    throw new IndexOutOfBoundsException();
 	}
@@ -120,16 +149,16 @@ public class MyLinkedList {
 	LNode ln = new LNode(5);
 	MyLinkedList m = new MyLinkedList(ln);
 
-	System.out.println(ln.toString());
-	System.out.println(m.toString());
-	m.add(1);
-	System.out.println(m.toString());
-	System.out.println(m.size());
+	System.out.println(ln.toString()); // [ 5 ]
+	System.out.println(m.toString()); // [ 5 ] 
+	m.add(1); 
+	System.out.println(m.toString()); // [ 5, 1 ]
+	System.out.println(m.size()); // 2
 	m.add(1,8);
-	System.out.println(m.toString());
-	System.out.println(m.size());
-	System.out.println(m.remove());
-	System.out.println(m.toString());
+	System.out.println(m.toString()); // [ 5, 8, 1 ]
+	System.out.println(m.size()); // 3
+	System.out.println(m.remove()); // 5
+	System.out.println(m.toString()); // [ 8, 1 ]
     }
 
 }
