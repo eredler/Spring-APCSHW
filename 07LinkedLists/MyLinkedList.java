@@ -14,7 +14,7 @@ public class MyLinkedList {
 	while (current.getNext() != null){
 	    setCurrent(current.getNext());
 	}
-	setTail(getCurrent());
+	setTail();
 	setCurrent(c);
     }
 
@@ -24,7 +24,7 @@ public class MyLinkedList {
 	while (current.getNext() != null){
 	    setCurrent(current.getNext());
 	}
-	setTail(getCurrent());
+	setTail();
 	setCurrent(h);
     }
 
@@ -42,6 +42,13 @@ public class MyLinkedList {
 
     public LNode getCurrent(){
 	return current;
+    }
+
+    public void setTail(){
+	while (current.getNext() != null){
+	    setCurrent(current.getNext());
+	}
+	setTail(current);
     }
 
     public void setTail(LNode t){
@@ -67,8 +74,7 @@ public class MyLinkedList {
 
     // doesn't work
     public boolean add(int value){
-	tail.setNext(new LNode(value));
-	setTail(tail.getNext());
+	add(value,size);
 	return true;
     }
 
@@ -89,13 +95,14 @@ public class MyLinkedList {
     
     public String toString(){
 	setCurrent(head);
-	String ans = "[ " + getCurrent().getValue();
+	String ans = "[ " + current.getValue();
 	if (head.getNext() != null){
-	    setCurrent(head.getNext());
+	    setCurrent(current.getNext());
 	    while (current.getNext() != null){
 		ans += ", " + current.getValue();
 		setCurrent(current.getNext());
 	    }
+	    ans += ", " + current.getValue();
 	}
 	ans += " ]";
 	return ans;
