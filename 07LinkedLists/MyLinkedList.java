@@ -1,14 +1,22 @@
+//ERROR (LNode & MyLinkedList): non-static type variable T cannot be referenced from a static context
+//
+//ALSO: FIX QUICKSORT!!!!!!!!
+//
+//08ExtraCredit: Sorts.java(merge int[], quick int[], radix int[]), MyLinkedList && LNode (SPEED TEST)
+//
+//
+
 import java.util.*;
 
-public class MyLinkedList {
+public class MyLinkedList<T> {
 
-    private LNode head;
-    private LNode current;
-    private LNode tail;
+    private LNode<T> head;
+    private LNode<T> current;
+    private LNode<T> tail;
 
     public int size = 1;
 
-    public MyLinkedList(LNode h, LNode c){
+    public MyLinkedList(LNode<T> h, LNode<T> c){
 	setHead(h);
 	setCurrent(c);
 	while (current.getNext() != null){
@@ -18,7 +26,7 @@ public class MyLinkedList {
 	setCurrent(c);
     }
 
-    public MyLinkedList(LNode h){
+    public MyLinkedList(LNode<T> h){
 	setHead(h);
 	setCurrent(h);
 	while (current.getNext() != null){
@@ -28,19 +36,23 @@ public class MyLinkedList {
 	setCurrent(h);
     }
 
-    public void setHead(LNode h){
+    public String name(){
+	return "redler.emily";
+    }
+
+    public void setHead(LNode<T> h){
 	head = h;
     }
     
-    public LNode getHead(){
+    public LNode<T> getHead(){
 	return head;
     }
 
-    public void setCurrent(LNode c){
+    public void setCurrent(LNode<T> c){
 	current = c;
     }
 
-    public LNode getCurrent(){
+    public LNode<T> getCurrent(){
 	return current;
     }
 
@@ -51,15 +63,15 @@ public class MyLinkedList {
 	setTail(current);
     }
 
-    public void setTail(LNode t){
+    public void setTail(LNode<T> t){
 	tail = t;
     }
 
-    public LNode getTail(){
+    public LNode<T> getTail(){
 	return tail;
     }
 
-    public int get(int index){
+    public T get(int index){
 	setCurrent(head);
 	try{
 	    while (index > 0){
@@ -72,21 +84,19 @@ public class MyLinkedList {
 	}
     }
 
-    // doesn't work
-    public boolean add(int value){
-	add(value,size);
+    public boolean add(T value){
+	add(size,value);
 	return true;
     }
 
-    // adds to end 
-    public void add(int index, int value){
+    public void add(int index, T value){
 	try {
 	    setCurrent(head);
 	    while (index > 1){
 		setCurrent(current.getNext());
 		index--;
 	    }
-	    current.setNext(new LNode(value,current.getNext()));
+	    current.setNext(new LNode<T>(value,current.getNext()));
 	    size++;
 	} catch (IndexOutOfBoundsException e){
 	    throw new IndexOutOfBoundsException();
@@ -108,7 +118,7 @@ public class MyLinkedList {
 	return ans;
     }
 
-    public int indexOf(int value){
+    public int indexOf(T value){
 	int i = 0;
 	while (current.getNext().getValue() != value){
 	    if (current.getNext().getNext() == null && current.getValue() != value){
@@ -124,10 +134,10 @@ public class MyLinkedList {
 	return size;
     }
 	
-    public int remove(){
+    public T remove(){
 	try {
 	    current = head.getNext();
-	    int hold = head.getValue();
+	    T hold = head.getValue();
 	    setHead(current);
 	    return hold;
 	} catch (NoSuchElementException e){
@@ -135,15 +145,14 @@ public class MyLinkedList {
 	}
     }
 
-    public int remove(int index){
+    public T remove(int index){
 	try {
 	    setCurrent(head);
 	    while (index > 1){
 		setCurrent(current.getNext());
 		index--;
 	    }
-	    //fix
-	    int hold = current.getNext().getValue();
+	    T hold = current.getNext().getValue();
 	    current.getNext().setNext(current.getNext().getNext());
 	    size--;
 	    return hold;
@@ -153,8 +162,8 @@ public class MyLinkedList {
     }
 
     public static void main(String[]args){
-	LNode ln = new LNode(5);
-	MyLinkedList m = new MyLinkedList(ln);
+	LNode<T> ln = new LNode<T>(5);
+	MyLinkedList<T> m = new MyLinkedList<T>(ln);
 
 	System.out.println(ln.toString()); // [ 5 ]
 	System.out.println(m.toString()); // [ 5 ] 

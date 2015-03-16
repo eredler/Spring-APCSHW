@@ -1,31 +1,31 @@
-public class LNode {
+public class LNode<T> {
 
-    private int value;
-    private LNode next;
+    private T value;
+    private LNode<T> next;
 
-    public LNode(int v){
+    public LNode(T v){
 	setValue(v);
 	setNext(null);
     }
 
-    public LNode(int v, LNode n){
+    public LNode(T v, LNode<T> n){
 	setValue(v);
 	setNext(n);
     }
 
-    public void setValue(int v){
+    public void setValue(T v){
 	value = v;
     }
 
-    public int getValue(){
+    public T getValue(){
 	return value;
     }
 
-    public void setNext(LNode n){
+    public void setNext(LNode<T> n){
 	next = n;
     }
 
-    public LNode getNext(){
+    public LNode<T> getNext(){
 	return next;
     }
 
@@ -34,9 +34,9 @@ public class LNode {
     }
 
     public static void main(String[]args){
-	LNode l = new LNode(6);
+	LNode<T> l = new LNode<T>(6);
 
-	LNode x = new LNode(3);
+	LNode<T> x = new LNode<T>(3);
 
 	System.out.println(l.toString());
 	System.out.println(x.toString());
