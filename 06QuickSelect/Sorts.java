@@ -101,18 +101,32 @@ public class Sorts {
     }
     
     public static void main(String[]args){
+	// if dups is 0, list may have duplicates, else no duplicates
+	int dups = 0;
+	try {
+	    dups = Integer.parseInt(args[0]);
+	} catch (ArrayIndexOutOfBoundsException e){}
+	
 	int l = 10;
 	int[] a = new int[l];
+	
 
-	for (int i = 0; i < l; i++){
-	    int n = r.nextInt(10)+1;
-	    //    if (!in(a,n)){
+	if (dups == 0){
+	    for (int i = 0; i < l; i++){
+		int n = r.nextInt(10)+1;
 		a[i] = n;
-		//    } else {
-		//		i--;
-		
-		//	    }
-	}
+	    }
+	} else {
+	     for (int i = 0; i < l; i++){
+		int n = r.nextInt(10)+1;
+		if (!in(a,n)){
+		    a[i] = n;
+		} else {
+		    i--;
+		}
+	    }
+	}		
+	     //	}
 	//	for (int ii = 0; ii <= 9; ii++) {
 	//	    a[ii] = 9-ii;
 	//	}
