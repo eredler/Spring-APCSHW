@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class MyLinkedList<T> {
+public class MyLinkedList<T> implements Iterable<T> {
 
     private LNode<T> head;
     private LNode<T> current;
@@ -151,6 +151,50 @@ public class MyLinkedList<T> {
 	} catch (IndexOutOfBoundsException e){
 	    throw new IndexOutOfBoundsException();
 	}
+    }
+
+    //
+    // INTERNAL ITERATOR CLASS
+    //
+    public class MLLIterator<T> implements Iterator<T> {
+	public LNode<T> now;
+
+	// constructor
+	public MLLIterator(LNode<T> l){
+	    now = l;
+	}
+	
+	public boolean hasNext(){
+	    if (now.getNext() == null){
+		return false;
+	    }
+	    return true;
+	}
+
+	public T next(){
+	    if (hasNext()){		
+		now = now.getNext();
+		return now.getValue();
+	    }
+	    return null;
+	}
+
+	// optional so throw exception
+	public void remove(){
+	    throw new UnsupportedOperationException();
+	}
+
+    }
+
+    // since MyLinkedList implememts Iterable, has to declare iterator()
+    public Iterator<T> iterator(LNode<T> l){
+	return new MLLIterator<T>(l);
+    }
+
+    public Iterator<T> iterator(){
+	LNode<Integer> l = new LNode<Integer>(5);
+	MLLIterator m = new MLLIterator<T>(l);
+	return m;
     }
 
     public static void main(String[]args){
