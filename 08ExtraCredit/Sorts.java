@@ -6,7 +6,7 @@ public class Sorts {
 
     public static Random r = new Random();
 
-      public static int[] merge(int[] x, int[] y){
+    public static int[] merge(int[] x, int[] y){
 	int[] ans = new int[x.length + y.length];
 	int xAt = 0;
 	int yAt = 0;
@@ -32,28 +32,12 @@ public class Sorts {
 	return ans;
     }
 
-    public static int[] copyHalf(int[] a, int whichHalf){
-	int[] ans = new int[a.length/2];
-	int size = ans.length;
-	if (whichHalf == 1){
-	    for (int i = 0; i < size; i++){
-		ans[i] = a[i];
-	    }
-	} else {
-	    ans = new int[a.length-size];
-	    for (int i = size; i < a.length; i++){
-		ans[i-size] = a[i];
-	    }
-	}
-	return ans;
-    }
-
     public static int[] mergeSort(int[] x){
 	if (x.length < 2){
 	    return x;
 	}
-	return merge(mergeSort(copyHalf(x,1)),mergeSort(copyHalf(x,2)));
-	
+	int half = x.length/2;
+	return merge(mergeSort(Arrays.copyOfRange(x,0,half)),mergeSort(Arrays.copyOfRange(x,half,x.length)));
     }
 
     public static String toString(int[] a){
@@ -126,10 +110,10 @@ public class Sorts {
 	    }
 	}
 
-    hold = ary[si];
-    ary[si] = pivot;
-    ary[index] = hold;
-    return index;
+	hold = ary[si];
+	ary[si] = pivot;
+	ary[index] = hold;
+	return index;
     }
 
     //for making list with no duplicates for testing
@@ -160,6 +144,7 @@ public class Sorts {
     }
     
     public static void main(String[]args){
+	/*
 	// if dups is 0, list may have duplicates, else no duplicates
 	int dups = 0;
 	try {
@@ -176,7 +161,7 @@ public class Sorts {
 		a[i] = n;
 	    }
 	} else {
-	     for (int i = 0; i < l; i++){
+	    for (int i = 0; i < l; i++){
 		int n = r.nextInt(10)+1;
 		if (!in(a,n)){
 		    a[i] = n;
@@ -185,7 +170,7 @@ public class Sorts {
 		}
 	    }
 	}		
-	     //	}
+	//	}
 	//	for (int ii = 0; ii <= 9; ii++) {
 	//	    a[ii] = 9-ii;
 	//	}
@@ -195,7 +180,16 @@ public class Sorts {
 	System.out.println(qs.toString());
 	qs.quickSort();
 	System.out.println(qs.toString());
+	}*/
+
+	/*
+	int n = 400000000;
+	int[] a = new int[n];
+	Random r = new Random();
+
+	for (int i = 0; i < n; i++){
+	    a[i] = r.nextInt(20)+1;
+	}	
+	*/
     }
-
-
 }

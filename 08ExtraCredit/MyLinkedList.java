@@ -1,9 +1,3 @@
-//ERROR (LNode & MyLinkedList): non-static type variable T cannot be referenced from a static context
-//
-//08ExtraCredit: Sorts.java(merge int[], quick int[], radix int[]), MyLinkedList && LNode (SPEED TEST)
-//
-//
-
 import java.util.*;
 
 public class MyLinkedList<T> {
@@ -17,9 +11,6 @@ public class MyLinkedList<T> {
     public MyLinkedList(LNode<T> h, LNode<T> c){
 	setHead(h);
 	setCurrent(c);
-	while (current.getNext() != null){
-	    setCurrent(current.getNext());
-	}
 	setTail();
 	setCurrent(c);
     }
@@ -160,6 +151,7 @@ public class MyLinkedList<T> {
     }
 
     public static void main(String[]args){
+	/*
 	LNode<Integer> ln = new LNode<Integer>(5);
 	MyLinkedList<Integer> m = new MyLinkedList<Integer>(ln);
 
@@ -174,5 +166,6 @@ public class MyLinkedList<T> {
 	System.out.println(m.remove()); // 5
 	System.out.println(m.toString()); // [ 8, 1 ]
     }
+	*/
 
 }

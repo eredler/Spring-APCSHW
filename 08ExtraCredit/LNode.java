@@ -34,6 +34,7 @@ public class LNode<T> {
     }
 
     public static void main(String[]args){
+	/*
 	LNode<Integer> l = new LNode<Integer>(6);
 
 	LNode<Integer> x = new LNode<Integer>(3);
@@ -43,7 +44,7 @@ public class LNode<T> {
 
 	l.setNext(x);
 
-	System.out.println(l.getNext().toString());
+	System.out.println(l.getNext().toString());*/
     }
 
 }
