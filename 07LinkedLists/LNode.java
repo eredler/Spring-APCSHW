@@ -5,6 +5,11 @@ public class LNode<T> {
     private T value;
     private LNode<T> next;
 
+    /*   public LNode(){
+	setValue(null);
+	setNext(null);
+	}*/
+
     public LNode(T v){
 	setValue(v);
 	setNext(null);

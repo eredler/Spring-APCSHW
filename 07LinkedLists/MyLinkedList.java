@@ -156,12 +156,11 @@ public class MyLinkedList<T> implements Iterable<T> {
     //
     // INTERNAL ITERATOR CLASS
     //
-    public class MLLIterator<T> implements Iterator<T> {
+    public class MLLIterator implements Iterator<T> {
 	public LNode<T> now;
 
 	// constructor
-	public MLLIterator(LNode<T> l){
-	    now = l;
+	public MLLIterator(){
 	}
 	
 	public boolean hasNext(){
@@ -187,15 +186,19 @@ public class MyLinkedList<T> implements Iterable<T> {
     }
 
     // since MyLinkedList implememts Iterable, has to declare iterator()
-    public Iterator<T> iterator(LNode<T> l){
-	return new MLLIterator<T>(l);
+    public Iterator<T> iterator(){
+	return new MLLIterator();
     }
 
+    /* public Iterator<T> iterator(LNode<T> l){
+	return new MLLIterator(l);
+	}*/
+    /*
     public Iterator<T> iterator(){
-	LNode<Integer> l = new LNode<Integer>(5);
+	LNode<T> l = new LNode<T>();
 	MLLIterator m = new MLLIterator<T>(l);
 	return m;
-    }
+	}*/
 
     public static void main(String[]args){
 	LNode<Integer> ln = new LNode<Integer>(5);
