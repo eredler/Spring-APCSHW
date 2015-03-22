@@ -190,16 +190,6 @@ public class MyLinkedList<T> implements Iterable<T> {
 	return new MLLIterator();
     }
 
-    /* public Iterator<T> iterator(LNode<T> l){
-	return new MLLIterator(l);
-	}*/
-    /*
-    public Iterator<T> iterator(){
-	LNode<T> l = new LNode<T>();
-	MLLIterator m = new MLLIterator<T>(l);
-	return m;
-	}*/
-
     public static void main(String[]args){
 	LNode<Integer> ln = new LNode<Integer>(5);
 	MyLinkedList<Integer> m = new MyLinkedList<Integer>(ln);
