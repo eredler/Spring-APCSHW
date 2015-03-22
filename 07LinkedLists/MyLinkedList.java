@@ -8,6 +8,42 @@ public class MyLinkedList<T> implements Iterable<T> {
 
     public int size = 1;
 
+ //
+    // INTERNAL ITERATOR CLASS
+    //
+    public class MLLIterator implements Iterator<T> {
+	public LNode<T> now;
+
+	// constructor
+	public MLLIterator(LNode<T> head){
+	    now = head;
+	}
+	
+	public boolean hasNext(){
+	    if (now.getNext() == null){
+		return false;
+	    }
+	    return true;
+	}
+
+	public T next(){
+	    if (hasNext()){	
+		T ans = now.getValue();
+		now = now.getNext();
+		return ans;
+	    } else {
+		throw new NoSuchElementException();
+	    }
+	}
+
+	// optional so throw exception
+	public void remove(){
+	    throw new UnsupportedOperationException();
+	}
+
+    }
+
+
     public MyLinkedList(LNode<T> h, LNode<T> c){
 	setHead(h);
 	setCurrent(c);
@@ -153,41 +189,10 @@ public class MyLinkedList<T> implements Iterable<T> {
 	}
     }
 
-    //
-    // INTERNAL ITERATOR CLASS
-    //
-    public class MLLIterator implements Iterator<T> {
-	public LNode<T> now;
-
-	// constructor
-	public MLLIterator(){
-	}
-	
-	public boolean hasNext(){
-	    if (now.getNext() == null){
-		return false;
-	    }
-	    return true;
-	}
-
-	public T next(){
-	    if (hasNext()){		
-		now = now.getNext();
-		return now.getValue();
-	    }
-	    return null;
-	}
-
-	// optional so throw exception
-	public void remove(){
-	    throw new UnsupportedOperationException();
-	}
-
-    }
-
+   
     // since MyLinkedList implememts Iterable, has to declare iterator()
     public Iterator<T> iterator(){
-	return new MLLIterator();
+	return new MLLIterator(head);
     }
 
     public static void main(String[]args){
