@@ -1,0 +1,11 @@
+import java.util.*;
+
+public class MyQueue {
+
+    public MyLinkedList<T> queue;
+
+    public MyQueue(){
+	queue = new MyLinkedList<T>(new LNode<T>())
+    }
+
+}
