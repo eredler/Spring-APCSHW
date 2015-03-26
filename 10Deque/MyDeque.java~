@@ -1,11 +1,11 @@
 public class MyDeque<T> {
-    public Object[] d;
+    public T[] d;
     public int size;
     public int head;
     public int tail;
 
     public MyDeque(){
-	d = new Object[10];
+	d = new T[10];
 	size = 0;
 	head = 0;
 	tail = 0;
@@ -41,19 +41,10 @@ public class MyDeque<T> {
 
     public void resizeCopy(){
 	// resize array (double) and copy to new array
-	Object[] ans = new Object[d.length*2];
-	int x = 0;
-	for (int i = head; i < d.length || i < tail; i++){
-	    ans[x] = d[i];
-	    x++;
+	T[] ans = new T[d.length*2];
+	for (int i = head, int x = 0; i < d.length; x++, i++){
+	    ans[x] = d[i]
 	} 
-	if (tail < head){
-	    for (int i = tail; i < head; i++){
-		ans[x] = d[i];
-		x++;
-	    }
-	}
-
     }
 
 }

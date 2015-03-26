@@ -1,14 +1,14 @@
 import java.util.*;
 
 public class MyStack<T> {
-    public MyLinkedList<T> stack;
+    public LinkedList<T> stack;
 
-    public MyStack(T value){
-	stack = new MyLinkedList<T>(new LNode<T>(value));
+    public myStack(){
+	stack = new LinkedList<T>();
     }
 
     public T push(T item){
-	stack.add(item);
+	stack.addFirst(item);
 	return item;
     }
 
@@ -22,14 +22,14 @@ public class MyStack<T> {
 
     public T peek(){
 	try {
-	    return stack.getHead().getValue();
+	    return stack.getFirst();
 	} catch (EmptyStackException e){
 	    throw new EmptyStackException();
 	}
     }
 
     public static void main(String[]args){
-	MyStack<Integer> ms = new MyStack<Integer>(8);
+	myStack<Integer> ms = new myStack<Integer>();
 
 	System.out.println(ms.push(1)); // 1
 	System.out.println(ms.push(-345)); // -345
