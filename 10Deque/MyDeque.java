@@ -6,6 +6,7 @@ public class MyDeque<T> {
     public int head;
     public int tail;
     public boolean shrinkOn = false;
+    public boolean debugPrint = false;
 
     public MyDeque(){
 	d = new Object[5];
@@ -15,7 +16,28 @@ public class MyDeque<T> {
     }
 
     public String toString(){
-	return Arrays.toString(d);
+	if (debugPrint == true){
+	    return Arrays.toString(d);
+	}
+	String ans = "[" + d[head];
+	if (head < tail){
+	    for (int i = head+1; i <= tail; i++){
+		ans += ", " + d[i];
+	    }
+	    ans += "]";
+	    return ans;
+	}
+	int x = 1;
+	for (int i = head+1; i < d.length; i++){
+	    ans += ", " + d[x];
+	    x++;
+	}
+	for (int i = 0; i <= tail; i++){
+	    ans += ", " + d[x];
+	    x++;
+	}
+	ans += "]";
+	return ans;
     }
 
     public void addFirst(T value){
@@ -156,9 +178,10 @@ public class MyDeque<T> {
 	MyDeque<String> md = new MyDeque<String>();
 
 	try {
-	    if (args[0] == "t"){
-		md.shrinkOn = true;
-	    } else {
+	    if (Integer.parseInt(args[0]) == 1){
+		md.debugPrint = true;
+	    } 
+	    if (Integer.parseInt(args[1]) == 1){
 		md.shrinkOn = true;
 	    }
 	} catch (ArrayIndexOutOfBoundsException e){
@@ -182,6 +205,7 @@ public class MyDeque<T> {
 	System.out.println(md.getFirst()); // emily
 	System.out.println(md.removeLast()); // jelly
 	System.out.println(md.getLast()); // redler
+	System.out.println(md.toString());
 
 	
     }
