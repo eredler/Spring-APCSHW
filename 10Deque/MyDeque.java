@@ -125,18 +125,23 @@ public class MyDeque<T> {
 	}
 	d = ans;
 	head = 0;
-	tail = size-1;
+	tail = x-1;
     }
 
     public void shrink(){
 	// resize array (half) and copy to new array
 	Object[] ans = new Object[d.length/2];
 	int x = 0;
-	for (int i = head; i < d.length || i <= tail; i++){
+	if (head < tail){
+	    for (int i = head; i <= tail; i++){
 	    ans[x] = d[i];
 	    x++;
-	} 
-	if (tail < head){
+	    }
+	} else {
+	    for (int i = head; i < d.length; i++){
+		ans[x] = d[i];
+		x++;
+	    } 
 	    for (int i = 0; i <= tail; i++){
 		ans[x] = d[i];
 		x++;
@@ -144,7 +149,7 @@ public class MyDeque<T> {
 	}
 	d = ans;
 	head = 0;
-	tail = size-1;
+	tail = x-1;
     }
 
     public static void main(String[]args){	
@@ -175,7 +180,6 @@ public class MyDeque<T> {
 	System.out.println(md.getFirst()); // ice cream
 	System.out.println(md.removeFirst()); // ice cream
 	System.out.println(md.getFirst()); // emily
-	System.out.println(md.toString());
 	System.out.println(md.removeLast()); // jelly
 	System.out.println(md.getLast()); // redler
 
