@@ -9,13 +9,22 @@ public class Maze {
     private static final int DFS = 1; // mode of 
     private static final int BFS = 0; // solving
 
+    public Coordinate start = new Coordinate(0,0);
+    public Coordinate end = new Coordinate(0,0);
+
+    public Frontier frontier = new Frontier();
+
     private String go(int x,int y){
 	return ("\033[" + x + ";" + y + "H");
     }
 
     // Same constructor as before...
     public Maze(String filename){
+	// set start coordinate
+	// set end coordinate
 
+	//get maze from file and turn into 2D array
+	frontier.addFirst(start);
     }
 
     public String toString(){
@@ -35,7 +44,6 @@ public class Maze {
      * Replace spaces with x's as you traverse the maze.
      */
     public boolean solveDFS(boolean animate){
-    
     }
 
     public boolean solveBFS(){

@@ -1,0 +1,18 @@
+import java.util.*;
+
+public class Coordinate(){
+    
+    int x = 0;
+    int y = 0;
+
+    public Coordinate(){
+	setX(0);
+	setY(0);
+    }
+
+    public Coordinate(int _x, int _y){
+	setX(_x);
+	setY(_y);
+    }
+
+}

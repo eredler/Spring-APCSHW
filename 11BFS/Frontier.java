@@ -5,4 +5,10 @@ public class Frontier {
 
     public MyDeque dq = new MyDeque();
 
+    public Frontier(){
+	dq = new MyDeque(20);
+    }
+
+    
+
 }
