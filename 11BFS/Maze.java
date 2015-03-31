@@ -23,12 +23,12 @@ public class Maze {
 	// set start coordinate
 	// set end coordinate
 
-	//get maze from file and turn into 2D array
+	//get maze from file and turn into (2D array???)
 	frontier.addFirst(start);
     }
 
     public String toString(){
-
+	
     }//do not do the funky character codes
 
     public String toString(boolean animate){
@@ -44,6 +44,7 @@ public class Maze {
      * Replace spaces with x's as you traverse the maze.
      */
     public boolean solveDFS(boolean animate){
+
     }
 
     public boolean solveBFS(){
@@ -54,5 +55,13 @@ public class Maze {
 	return solveDFS(false);
     }
 
+    /*return an array [x1,y1,x2,y2,x3,y3...]
+     *that contains the coordinates of the solution from start to end.
+     *Precondition : solveBFS() OR solveDFS() has already been called (otherwise an empty array is returned)
+     *Postcondition: the correct solution is in the returned array
+     */
+    public int[] solutionCoordinates(){
+	
+    }
 
 }
