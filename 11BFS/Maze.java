@@ -2,6 +2,8 @@ import java.util.*;
 
 public class Maze {
 
+    public char maze[][];
+
     private static final String clear = "\033[2J";
     private static final String hide = "\033[?25l";
     private static final String show = "\033[?25h";
@@ -22,9 +24,57 @@ public class Maze {
     public Maze(String filename){
 	// set start coordinate
 	// set end coordinate
+	int numRows = 0;
+	int numCols = 0;
 
-	//get maze from file and turn into (2D array???)
+	String ans = "";
+
+	Scanner in = new Scanner(new File(filename));
+
+	while (in.hasNext){
+	    String line = in.nextLine();
+	    if(numRows == 0){
+		numCols = line.length();
+	    }
+	    numRows++;
+	    ans += line;
+	}
+
+	maze = new char[numRows][numCols];
+	int x = 0;
+	for (int r = 0; r < numRows; r++){
+	    for (int c = 0; c < numCols; c++){
+		maze[r][c] = ans[x];
+		x++;
+	    }
+	}
+	boolean foundS = false;
+	boolean foundE = false;
+	
+	while (foundS == false){
+	    for (int r = 0; r < numRows; r++){
+		for (int c = 0; c < numCols; c++){
+		    if (maze[r][c] = 'S'){
+			start = new Coordinate(c,r);
+			foundS = true;
+		    }
+		}
+	    }
+	}
+
+	while (foundE == false){
+	    for (int r = 0; r < numRows; r++){
+		for (int c = 0; c < numCols; c++){
+		    if (maze[r][c] = 'E'){
+			end = new Coordinate(c,r);
+			foundE = true;
+		    }
+		}
+	    }
+	}
+
 	frontier.addFirst(start);
+	
     }
 
     public String toString(){

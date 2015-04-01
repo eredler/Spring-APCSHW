@@ -2,6 +2,8 @@ import java.util.*;
 
 public class Coordinate(){
     
+    Coordinate prev = null;
+
     int x = 0;
     int y = 0;
 
@@ -23,12 +25,20 @@ public class Coordinate(){
 	y = _y;
     }
 
+    public void setPrev(Coordinate p){
+	prev = p;
+    }
+
     public int getX(){
 	return x;
     }
 
     public int getY(){
 	return y
+    }
+
+    public Coordinate getPrev(){
+	return prev;
     }
 
     public static toString(){
