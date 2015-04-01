@@ -20,7 +20,6 @@ public class Maze {
 	return ("\033[" + x + ";" + y + "H");
     }
 
-    // Same constructor as before...
     public Maze(String filename){
 	// set start coordinate
 	// set end coordinate
@@ -77,16 +76,28 @@ public class Maze {
 	
     }
 
+    //do not do the funky character codes
     public String toString(){
-	
-    }//do not do the funky character codes
+	String ans = "";
+	for (int r = 0; r < numRows; r++){
+	    for (int c = 0; c < numCols; c++){
+		ans += maze[r][c] + " ";
+	    }
+	    ans += "\n";
+	}
+	return ans;
+    }
 
+    //do the funky character codes when animate is true
     public String toString(boolean animate){
-
-    } //do the funky character codes when animate is true
+	//
+	// animate later
+	//
+	return this.toString();
+    }
 
     public boolean solveBFS(boolean animate){
-
+	frontier.solve(animate,0);
     }
 
     /*Solve the maze using a frontier in a DFS manner.
@@ -94,7 +105,7 @@ public class Maze {
      * Replace spaces with x's as you traverse the maze.
      */
     public boolean solveDFS(boolean animate){
-
+	frontier.solve(animate,1);
     }
 
     public boolean solveBFS(){
