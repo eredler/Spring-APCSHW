@@ -1,12 +1,12 @@
 import java.util.*;
 
-public class Frontier extends MyDeque{
+public class Frontier<Coordinate> extends MyDeque{
     //keep track of where you've been
 
-    public MyDeque dq = new MyDeque();
+    public MyDeque<Coordinate> dq = new MyDeque<Coordinate>();
 
     public Frontier(){
-	dq = new MyDeque(20);
+	dq = new MyDeque<Coordinate>(20);
     }
 
     /* private boolean solve(boolean anim, int mode){

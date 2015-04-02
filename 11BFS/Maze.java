@@ -15,7 +15,7 @@ public class Maze {
     public Coordinate start = new Coordinate(0,0);
     public Coordinate end = new Coordinate(0,0);
 
-    public Frontier frontier = new Frontier();
+    public MyDeque frontier = new MyDeque();
 
     public int numCols = 0;
     public int numRows = 0;
@@ -32,54 +32,55 @@ public class Maze {
 
 	String ans = "";
 	try {
-	    Scanner in = new Scanner(new File(filename));
+	    File f = new File(filename);
 
+	    Scanner in = new Scanner(f);
 
-	while (in.hasNext()){
-	    String line = in.nextLine();
-	    if(numRows == 0){
-		numCols = line.length();
+	    while (in.hasNext()){
+		String line = in.nextLine();
+		if(numRows == 0){
+		    numCols = line.length();
+		}
+		numRows++;
+		ans += line;
 	    }
-	    numRows++;
-	    ans += line;
-	}
 
 	
 
-	maze = new char[numRows][numCols];
-	int x = 0;
-	for (int r = 0; r < numRows; r++){
-	    for (int c = 0; c < numCols; c++){
-		maze[r][c] = ans.charAt(x);
-		x++;
+	    maze = new char[numRows][numCols];
+	    int x = 0;
+	    for (int r = 0; r < numRows; r++){
+		for (int c = 0; c < numCols; c++){
+		    maze[r][c] = ans.charAt(x);
+		    x++;
+		}
 	    }
-	}
-	boolean foundS = false;
-	boolean foundE = false;
+	    boolean foundS = false;
+	    boolean foundE = false;
 	
-	while (foundS == false){
-	    for (int r = 0; r < numRows; r++){
-		for (int c = 0; c < numCols; c++){
-		    if (maze[r][c] == 'S'){
-			start = new Coordinate(c,r);
-			foundS = true;
+	    while (foundS == false){
+		for (int r = 0; r < numRows; r++){
+		    for (int c = 0; c < numCols; c++){
+			if (maze[r][c] == 'S'){
+			    start = new Coordinate(c,r);
+			    foundS = true;
+			}
 		    }
 		}
 	    }
-	}
 
-	while (foundE == false){
-	    for (int r = 0; r < numRows; r++){
-		for (int c = 0; c < numCols; c++){
-		    if (maze[r][c] == 'E'){
-			end = new Coordinate(c,r);
-			foundE = true;
+	    while (foundE == false){
+		for (int r = 0; r < numRows; r++){
+		    for (int c = 0; c < numCols; c++){
+			if (maze[r][c] == 'E'){
+			    end = new Coordinate(c,r);
+			    foundE = true;
+			}
 		    }
 		}
 	    }
-	}
 
-	frontier.addFirst(start);
+	    frontier.addFirst(start);
 	
 	}  catch (FileNotFoundException e){
 	    throw new FileNotFoundException();
@@ -109,7 +110,33 @@ public class Maze {
 
     public boolean solveBFS(boolean animate){
 	//	frontier.solve(animate,0);
-	return solveBFS(false);
+	
+	Coordinate current = frontier.getLast();
+
+	while (frontier.getFirst() != end){
+
+	    if (maze[current.getY()+1][current.getX()+1] == ' '){
+		frontier.addFirst(new Coordinate(current.getX()+1,current.getY()+1));
+		frontier.getFirst().setPrev(current);
+	    }
+	    if (maze[current.getY()-1][current.getX()+1] == ' '){
+		frontier.addFirst(new Coordinate(current.getX()+1,current.getY()-1));
+		frontier.getFirst().setPrev(current);
+	    }
+	    if (maze[current.getY()+1][current.getX()-1] == ' '){
+		frontier.addFirst(new Coordinate(current.getX()-1,current.getY()+1));
+		frontier.getFirst().setPrev(current);
+	    }
+	    if (maze[current.getY()-1][current.getX()-1] == ' '){
+		frontier.addFirst(new Coordinate(current.getX()-1,current.getY()-1));
+		frontier.getFirst().setPrev(current);
+	    }
+
+	    frontier.removeLast();
+	    current = frontier.getLast();
+	}
+
+	return true;
     }
 
     /*Solve the maze using a frontier in a DFS manner.
@@ -118,7 +145,7 @@ public class Maze {
      */
     public boolean solveDFS(boolean animate){
 	//	frontier.solve(animate,1);
-	return solveDFS(false);
+	return true;
     }
 
     public boolean solveBFS(){
@@ -140,7 +167,8 @@ public class Maze {
 
     public static void main(String[]args){
 	try {
-
+	    Maze m = new Maze("/test1.txt");
+	    System.out.println(m.toString());
 	} catch (FileNotFoundException e){
 	    throw new FileNotFoundException();
 	}
