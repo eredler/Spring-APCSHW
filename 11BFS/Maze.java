@@ -15,7 +15,7 @@ public class Maze {
     public Coordinate start = new Coordinate(0,0);
     public Coordinate end = new Coordinate(0,0);
 
-    public MyDeque frontier = new MyDeque();
+    public MyDeque<Coordinate> frontier = new MyDeque<Coordinate>();
 
     public int numCols = 0;
     public int numRows = 0;
@@ -82,7 +82,7 @@ public class Maze {
 
 	    frontier.addFirst(start);
 	
-	}  catch (FileNotFoundException e){
+	} catch (FileNotFoundException e){
 	    throw new FileNotFoundException();
 	}
     }
