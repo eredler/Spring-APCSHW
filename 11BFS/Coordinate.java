@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Coordinate(){
+public class Coordinate {
     
     Coordinate prev = null;
 
@@ -34,14 +34,14 @@ public class Coordinate(){
     }
 
     public int getY(){
-	return y
+	return y;
     }
 
     public Coordinate getPrev(){
 	return prev;
     }
 
-    public static toString(){
+    public String toString(){
 	return "(" + getX() + ", " + getY() + ")";
     }
 

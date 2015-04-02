@@ -1,4 +1,5 @@
 import java.util.*;
+import java.io.*;
 
 public class Maze {
 
@@ -16,6 +17,9 @@ public class Maze {
 
     public Frontier frontier = new Frontier();
 
+    public int numCols = 0;
+    public int numRows = 0;
+
     private String go(int x,int y){
 	return ("\033[" + x + ";" + y + "H");
     }
@@ -27,10 +31,11 @@ public class Maze {
 	int numCols = 0;
 
 	String ans = "";
+	try {
+	    Scanner in = new Scanner(new File(filename));
 
-	Scanner in = new Scanner(new File(filename));
 
-	while (in.hasNext){
+	while (in.hasNext()){
 	    String line = in.nextLine();
 	    if(numRows == 0){
 		numCols = line.length();
@@ -39,11 +44,13 @@ public class Maze {
 	    ans += line;
 	}
 
+	
+
 	maze = new char[numRows][numCols];
 	int x = 0;
 	for (int r = 0; r < numRows; r++){
 	    for (int c = 0; c < numCols; c++){
-		maze[r][c] = ans[x];
+		maze[r][c] = ans.charAt(x);
 		x++;
 	    }
 	}
@@ -53,7 +60,7 @@ public class Maze {
 	while (foundS == false){
 	    for (int r = 0; r < numRows; r++){
 		for (int c = 0; c < numCols; c++){
-		    if (maze[r][c] = 'S'){
+		    if (maze[r][c] == 'S'){
 			start = new Coordinate(c,r);
 			foundS = true;
 		    }
@@ -64,7 +71,7 @@ public class Maze {
 	while (foundE == false){
 	    for (int r = 0; r < numRows; r++){
 		for (int c = 0; c < numCols; c++){
-		    if (maze[r][c] = 'E'){
+		    if (maze[r][c] == 'E'){
 			end = new Coordinate(c,r);
 			foundE = true;
 		    }
@@ -74,7 +81,11 @@ public class Maze {
 
 	frontier.addFirst(start);
 	
+	}  catch (FileNotFoundException e){
+	    throw new FileNotFoundException();
+	}
     }
+    
 
     //do not do the funky character codes
     public String toString(){
@@ -97,7 +108,8 @@ public class Maze {
     }
 
     public boolean solveBFS(boolean animate){
-	frontier.solve(animate,0);
+	//	frontier.solve(animate,0);
+	return solveBFS(false);
     }
 
     /*Solve the maze using a frontier in a DFS manner.
@@ -105,7 +117,8 @@ public class Maze {
      * Replace spaces with x's as you traverse the maze.
      */
     public boolean solveDFS(boolean animate){
-	frontier.solve(animate,1);
+	//	frontier.solve(animate,1);
+	return solveDFS(false);
     }
 
     public boolean solveBFS(){
@@ -122,7 +135,15 @@ public class Maze {
      *Postcondition: the correct solution is in the returned array
      */
     public int[] solutionCoordinates(){
-	
+	return new int[1];
+    }
+
+    public static void main(String[]args){
+	try {
+
+	} catch (FileNotFoundException e){
+	    throw new FileNotFoundException();
+	}
     }
 
 }
