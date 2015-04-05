@@ -120,48 +120,71 @@ public class Maze {
     public boolean solveBFS(boolean animate){
 	//	frontier.solve(animate,0);
 	Coordinate current = frontier.getLast();
+	sop("current " + current.toString());
 	while (frontier.getFirst() != end){
 	    boolean xismin = current.getX() < 1;
 	    boolean xismax = current.getX() > numCols - 1;
 	    boolean yismin = current.getY() < 1;
 	    boolean yismax = current.getY() > numRows - 1;
-	    System.out.println(current.toString());
-	    sop("a");
-	    if (!(yismax || xismax) && maze[current.getY()+1][current.getX()+1] == ' '){
+
+	    boolean addedSomething = false;
+	    //   System.out.println(current.toString());
+	    //	    System.out.println("yismax " + yismax);
+	    // System.out.println("yismin " + yismin);
+	    // System.out.println("xismax " + xismax);
+	    // System.out.println("xismin " + xismin);
+	    //	    System.out.println("[" + maze[current.getY()+1][current.getX()] + "]" + " current.getY()+1");
+	    //    System.out.println(maze[current.getY()-1][current.getX()] + " current.getY()-1");
+	    //	    System.out.println(maze[current.getY()][current.getX()+1] + " current.getX()+1");
+	    //	    System.out.println(maze[current.getY()][current.getX()-1] + " current.getX()-1");
+	    //  sop("a");
+	    if (!yismax && maze[current.getY()+1][current.getX()] == ' '){
+		//	sop("hi");
 		System.out.println(frontier.toString());
-		frontier.addFirst(new Coordinate(current.getX()+1,current.getY()+1));
+		frontier.addFirst(new Coordinate(current.getX(),current.getY()+1));
 		frontier.getFirst().setPrev(current);
+		addedSomething = true;
+		System.out.println(frontier.getFirst().toString());
 	    }
-	    sop("b");
-	    if (!(yismin || xismax) && maze[current.getY()-1][current.getX()+1] == ' '){
+	    //    sop("b");
+	    if (!yismin && maze[current.getY()-1][current.getX()] == ' '){
 
 		System.out.println(frontier.toString());
-		frontier.addFirst(new Coordinate(current.getX()+1,current.getY()-1));
+		frontier.addFirst(new Coordinate(current.getX(),current.getY()-1));
 		frontier.getFirst().setPrev(current);
+		addedSomething = true;
 	    }
-	    sop("c");
-	    if (!(yismax || xismin) && maze[current.getY()+1][current.getX()-1] == ' '){
+	    //   sop("c");
+	    if (!xismin && maze[current.getY()][current.getX()-1] == ' '){
 
 		System.out.println(frontier.toString());
-		frontier.addFirst(new Coordinate(current.getX()-1,current.getY()+1));
+		frontier.addFirst(new Coordinate(current.getX()-1,current.getY()));
 		frontier.getFirst().setPrev(current);
+		addedSomething = true;
 	    }
-	    sop("d");
-	    if (!(yismin || xismin) && maze[current.getY()-1][current.getX()-1] == ' '){
+	    //   sop("d");
+	    if (!xismax && maze[current.getY()][current.getX()+1] == ' '){
 
 		System.out.println(frontier.toString());
-		frontier.addFirst(new Coordinate(current.getX()-1,current.getY()-1));
+		frontier.addFirst(new Coordinate(current.getX()-1,current.getY()));
 		frontier.getFirst().setPrev(current);
+		addedSomething = true;
 	    }
-	    sop("e");
+	    //   sop("e");
 	    frontier.removeLast();
-
-	    sop("f");
-	    current = frontier.getLast();
+	    sop(frontier.getLast().toString());
+	    //   sop("f");
+	    try {
+		current = frontier.getLast();
+	    } catch (ArrayIndexOutOfBoundsException e){
+		System.out.println("exception");
+		return false;
+	    }
 	}
 	while (current.getPrev() != null){
 	    maze[current.getY()][current.getX()] = '.';
 	}
+	sop(this.toString());
 	return true;
     }
 

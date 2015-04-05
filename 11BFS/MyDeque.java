@@ -9,10 +9,10 @@ public class MyDeque<T> {
     public boolean debugPrint = false;
 
     public MyDeque(){
-	d = new Object[5];
+	d = new Object[10];
 	size = 0;
-	head = 0;
-	tail = 0;
+	head = 5;
+	tail = 4;
     }
 
     public MyDeque(int n){
@@ -49,16 +49,12 @@ public class MyDeque<T> {
 
     public void addFirst(T value){
 	// when array is full, resize, then add
-	if (size+1 > d.length){
+	if (size == d.length){
 	    grow();
 	}
-	
-	if (d[head] != null){
-	    if (head == 0){
-		head = d.length-1;
-	    } else {
-		head--;
-	    }
+	head--;
+	if (head == -1){
+	    head = d.length-1;
 	}
 	d[head] = value;
 	size++;
@@ -67,13 +63,12 @@ public class MyDeque<T> {
 
     public void addLast(T value){
 	// when array is full, resize, then add
-	if (size+1 > d.length){
+	if (size == d.length){
 	    grow();
 	}
-	if (tail >= d.length){
+	tail++;
+	if (tail == d.length){
 	    tail = 0;
-	} else {
-	    tail++;
 	}
 	d[tail] = value;
 	size++;
@@ -82,17 +77,15 @@ public class MyDeque<T> {
     public T removeFirst(){
 	// throws NoSuchElementException
 	try {	    
-	    if ((size+1 <= d.length/4) && shrinkOn){
+	    if ((size <= d.length/4) && shrinkOn){
 		shrink();
 	    }
-	    T hold = (T)d[head];
-	    d[head] = null;
-	    if (head >= d.length-1){
-		head = 0;
-	    } else {
-		head++;
-	    }
 	    size--;
+	    T hold = (T)d[head];
+	    head++;
+	    if (head == d.length){
+		head = 0;
+	    }
 	    return hold;
 	} catch (NoSuchElementException e){
 	    throw new NoSuchElementException();
@@ -105,14 +98,12 @@ public class MyDeque<T> {
 	    if ((size+1 <= d.length/4) && shrinkOn){
 		shrink();
 	    }
-	    T hold = (T)d[tail];
-	    d[tail] = null;
-	    if (tail == 0){
-		tail = d.length;
-	    } else {
-		tail--;
-	    }
 	    size--;
+	    T hold = (T)d[tail];
+	    tail--;
+	    if (tail == -1){
+		tail = d.length-1;
+	    }
 	    return hold;
 	} catch (NoSuchElementException e){
 	    throw new NoSuchElementException();
