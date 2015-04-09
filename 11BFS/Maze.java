@@ -20,6 +20,18 @@ public class Maze {
     public int numCols = 0;
     public int numRows = 0;
 
+    /*    public void clearTerminal(){
+	System.out.println(clear());
+	}*/
+
+    public void wait(int millis){
+	try {
+	    Thread.sleep(millis);
+	}
+	catch (InterruptedException e) {
+	}
+    }
+
     private String go(int x,int y){
 	return ("\033[" + x + ";" + y + "H");
     }
@@ -111,9 +123,9 @@ public class Maze {
 
     //do the funky character codes when animate is true
     public String toString(boolean animate){
-	//
-	// animate later
-	//
+	if (animate) {
+	    return clear+hide+go(0,0)+toString()+"\n"+hide;
+	} 
 	return this.toString();
     }
 
@@ -121,6 +133,7 @@ public class Maze {
 	//	frontier.solve(animate,0);
 	Coordinate current = frontier.getLast();
 	sop("current " + current.toString());
+
 	while (frontier.getFirst() != end){
 	    boolean xisnotmin = current.getX() > 0;
 	    boolean xisnotmax = current.getX() < numCols - 1;
@@ -128,28 +141,18 @@ public class Maze {
 	    boolean yisnotmax = current.getY() < numRows - 1;
 
 	    boolean addedSomething = false;
-	    //   System.out.println(current.toString());
-	    //	    System.out.println("yismax " + yismax);
-	    // System.out.println("yismin " + yismin);
-	    // System.out.println("xismax " + xismax);
-	    // System.out.println("xismin " + xismin);
-	    //	    System.out.println("[" + maze[current.getY()+1][current.getX()] + "]" + " current.getY()+1");
-	    //    System.out.println(maze[current.getY()-1][current.getX()] + " current.getY()-1");
-	    //	    System.out.println(maze[current.getY()][current.getX()+1] + " current.getX()+1");
-	    //	    System.out.println(maze[current.getY()][current.getX()-1] + " current.getX()-1");
-	    //  sop("a");
+
 	    if (yisnotmax && maze[current.getY()+1][current.getX()] == ' '){
-		//	sop("hi");
 		//	System.out.println(frontier.toString());
 		frontier.addFirst(new Coordinate(current.getX(),current.getY()+1));
 		frontier.getFirst().setPrev(current);
 		addedSomething = true;
-		System.out.println(frontier.getFirst().toString());
+		//	System.out.println(frontier.getFirst().toString());
 	    }
 	    //    sop("b");
 	    if (yisnotmin && maze[current.getY()-1][current.getX()] == ' '){
 
-		System.out.println(frontier.toString());
+		//	System.out.println(frontier.toString());
 		frontier.addFirst(new Coordinate(current.getX(),current.getY()-1));
 		frontier.getFirst().setPrev(current);
 		addedSomething = true;
@@ -157,7 +160,7 @@ public class Maze {
 	    //   sop("c");
 	    if (xisnotmin && maze[current.getY()][current.getX()-1] == ' '){
 
-		System.out.println(frontier.toString());
+		//	System.out.println(frontier.toString());
 		frontier.addFirst(new Coordinate(current.getX()-1,current.getY()));
 		frontier.getFirst().setPrev(current);
 		addedSomething = true;
@@ -165,26 +168,32 @@ public class Maze {
 	    //   sop("d");
 	    if (xisnotmax && maze[current.getY()][current.getX()+1] == ' '){
 
-		System.out.println(frontier.toString());
+		//	System.out.println(frontier.toString());
 		frontier.addFirst(new Coordinate(current.getX()+1,current.getY()));
 		frontier.getFirst().setPrev(current);
 		addedSomething = true;
 	    }
 	    //   sop("e");
+	    maze[current.getY()][current.getX()] = '*';
 	    frontier.removeLast();
-	    sop(frontier.getLast().toString());
-	    //   sop("f");
+	    //   sop(frontier.getLast().toString());
+	    sop("f");
 	    try {
 		current = frontier.getLast();
 	    } catch (ArrayIndexOutOfBoundsException e){
 		System.out.println("exception");
 		return false;
 	    }
+	    sop(this.toString() + "/n/n");
+	    System.out.println(frontier.getFirst().toString());
 	}
+
 	while (current.getPrev() != null){
 	    maze[current.getY()][current.getX()] = '.';
 	}
-	sop(this.toString());
+
+	sop("hello");
+	sop(this.toString(true));
 	return true;
     }
 
@@ -217,14 +226,14 @@ public class Maze {
 
     public static void main(String[]args){
 	//	try {
-	    Maze m = new Maze("test1.txt");
-	    System.out.println(m.toString());
-	    m.solveBFS();
-	    //	} catch (FileNotFoundException e){
-	    //System.out.println("ERROR: Cannot run [2]");
+	Maze m = new Maze("data1.dat");
+	System.out.println(m.toString());
+	m.solveBFS();
+	//	} catch (FileNotFoundException e){
+	//System.out.println("ERROR: Cannot run [2]");
 
-	    // throw new FileNotFoundException();
-	    //	}
+	// throw new FileNotFoundException();
+	//	}
     }
 
 }
