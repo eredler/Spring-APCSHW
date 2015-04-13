@@ -4,27 +4,29 @@ public class Frontier<Coordinate> extends MyDeque{
     //keep track of where you've been
 
     public MyDeque<Coordinate> dq = new MyDeque<Coordinate>();
+    private int DFS = 1;
+    private int BFS = 0;
+    private int mode;
 
-    public Frontier(){
-	dq = new MyDeque<Coordinate>(20);
+    public Frontier(int m){
+	mode = m;
+	dq = new MyDeque<Coordinate>();
     }
 
-    /* private boolean solve(boolean anim, int mode){
-	
-       }*/
+    public void add(Coordinate c){
+	if (mode == DFS){
+	    dq.addFirst(c);
+	} else {
+	    dq.addLast(c);
+	}
+    }
 
-    //BFS methods
-
-    /*   public void addFirst(Coordinate c){
-	dq.addFirst(c);
-    } 
-
-    public void addLast(Coordinate c){
-	dq.addLast(c);
-    } 
-
-    public Coordinate getFirst(){
-	return dq.getFirst();
-	}*/
+    public boolean isEmpty(){
+	return (dq.size==0);
+    }
+    
+    public Coordinate remove(){
+	return dq.removeFirst();
+    }
 
 }
