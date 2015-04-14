@@ -20,8 +20,12 @@ public class Maze {
     public Coordinate start = new Coordinate(0,0);
     public Coordinate end = new Coordinate(0,0);
 
+    public int[] solutionCoordinates = new int[1];
+
     public int maxx = 0;
     public int maxy = 0;
+
+    public boolean printNice = false;
 
     /*    public void clearTerminal(){
 	  System.out.println(clear());
@@ -170,7 +174,16 @@ public class Maze {
 		    maze[solnPath.getY()][solnPath.getX()] = 'S';
 		    clearRest();
 		    System.out.println(toString());
-		    System.out.println(solution.toString());
+		    if (!printNice){
+			String ans = "[ " + solution.get(0).getX() + ", " + solution.get(0).getY();
+			for (int i = 1; i < solution.size(); i++){
+			    ans += ", " + solution.get(i).getX() + ", " + solution.get(i).getY();
+			}
+			ans += " ]"; 
+			System.out.println(ans);
+		    } else {
+			System.out.println(solution.toString());
+		    }
 		    return true;
 		
 		}
@@ -230,9 +243,8 @@ public class Maze {
 	 *Precondition : solveBFS() OR solveDFS() has already been called (otherwise an empty array is returned)
 	 *Postcondition: the correct solution is in the returned array
 	 */
-	public int[] solutionCoordinates(){
-	    return new int[1];
-	}
+
+	
 
 
 	public static void main(String[]args){
@@ -251,7 +263,7 @@ public class Maze {
 
 	    Maze m = new Maze(f);
 	    System.out.println(m.toString());
-	    System.out.println(m.solve(mode, true));
+	    m.solve(mode, true);
 	    //	} catch (FileNotFoundException e){
 	    //System.out.println("ERROR: Cannot run [2]");
 
