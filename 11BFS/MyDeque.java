@@ -2,7 +2,7 @@ import java.util.*;
 
 public class MyDeque<T> {
     public Object[] d;
-    public int[] pri;
+    public Integer[] pri;
     public int size;
     public int head;
     public int tail;
@@ -11,7 +11,7 @@ public class MyDeque<T> {
 
     public MyDeque(){
 	d = new Object[10];
-	pri = new int[10];
+	pri = new Integer[10];
 	size = 0;
 	head = 5;
 	tail = 4;
@@ -19,7 +19,7 @@ public class MyDeque<T> {
 
     public MyDeque(int n){
 	d = new Object[n];
-	pri = new int[n];
+	pri = new Integer[n];
 	size = 0;
 	head = 0;
 	tail = 0;
@@ -30,7 +30,7 @@ public class MyDeque<T> {
 	    return Arrays.toString(d);
 	}
 	String ans = "[" + d[head];
-	if (head < tail){
+	if (head <= tail){
 	    for (int i = head+1; i <= tail; i++){
 		ans += ", " + d[i];
 	    }
@@ -98,19 +98,61 @@ public class MyDeque<T> {
 		shrinkPri();
 	    }
 	    size--;
-	    T smallestPri = pri[0];
+	    Integer smallestPri = pri[0];
 	    int smallestPriIndex = 0;
-	    for (int i = i; i < d.length; i++){
+	    while (smallestPri == null){
+		smallestPriIndex++;
+		smallestPri = pri[smallestPriIndex];
+	    }
+	    for (int i = 0; i < d.length; i++){
 		try {
 		    if (pri[i] < smallestPri){
 			smallestPriIndex = i;
 			smallestPri = pri[i];			
 		    }
-		} catch (NullPointerException e){}
+		} catch (NullPointerException e){
+		    // do nothing
+		}
 	    }
 	    T hold = (T)d[smallestPriIndex];
 	    d[smallestPriIndex] = d[head];
 	    pri[smallestPriIndex] = pri[head];
+	    head++;
+	    return hold;
+	} catch (NoSuchElementException e){
+	    throw new NoSuchElementException();
+	}
+    }
+
+ public T removeLargest(){
+	try {	    
+	    if ((size <= d.length/4) && shrinkOn){
+		shrink();
+		shrinkPri();
+	    }
+	    size--;
+	    Integer largestPri = pri[0];
+	    int largestPriIndex = 0;
+	    while (largestPri == null){
+		largestPriIndex++;
+		largestPri = pri[largestPriIndex];
+	    }
+	    for (int i = 1; i < d.length; i++){
+		try {
+		    if (pri[i] > largestPri){
+			largestPriIndex = i;
+			largestPri = pri[i];			
+		    }
+		} catch (NullPointerException e){}
+	    }
+	    System.out.println("largestPriIndex " + largestPriIndex);
+	    System.out.println("largestPri " + largestPri);
+	    System.out.println("head " + head);
+	    T hold = (T)d[largestPriIndex];
+	    System.out.println("dhead " + d[head]);
+	    d[largestPriIndex] = d[head];
+	    // System.out.println( Arrays.toString(d));
+	    pri[largestPriIndex] = pri[head];
 	    head++;
 	    return hold;
 	} catch (NoSuchElementException e){
@@ -194,7 +236,7 @@ public class MyDeque<T> {
 
     public void growPri(){
 	// resize array (double) and copy to new array
-	int[] ans = new int[d.length*2];
+	Integer[] ans = new Integer[d.length*2];
 	int x = 0;
 	for (int i = head; i < d.length || i <= tail; i++){
 	    ans[x] = pri[i];
@@ -237,7 +279,7 @@ public class MyDeque<T> {
 
     public void shrinkPri(){
 	// resize array (half) and copy to new array
-	int[] ans = new int[d.length/2];
+	Integer[] ans = new Integer[d.length/2];
 	int x = 0;
 	if (head < tail){
 	    for (int i = head; i <= tail; i++){
@@ -273,7 +315,26 @@ public class MyDeque<T> {
 
 	}
 
+	// Testing for priority MyDeque
+	//
+	md.add("apple 1",1);
+	md.add("banana 0",0);
+	md.add("carrot 6",6);
+	md.add("dinosaur 3",3);
+	md.add("emily 10",10);
+	System.out.println(md.toString()); // [emily, dinosaur, carrot, banana, apple]
+	System.out.println(md.removeSmallest()); // banana
+	System.out.println(md.toString()); // [emily, dinosaur, carrot, apple]
+	System.out.println(md.removeSmallest()); // apple
+	System.out.println(md.toString()); // [emily, dinosaur, carrot]
+	System.out.println(md.removeLargest()); // emily
+	System.out.println(md.toString()); // [dinosaur, carrot]
+	System.out.println(md.removeLargest()); // carrot
+	System.out.println(md.toString()); // [dinosaur]
 
+	/*
+	// Testing for REGULAR MyDeque
+	//
 	md.addFirst("hi");
 	System.out.println(md.getFirst()); // hi
 	md.addFirst("hello");
@@ -291,7 +352,7 @@ public class MyDeque<T> {
 	System.out.println(md.removeLast()); // jelly
 	System.out.println(md.getLast()); // redler
 	System.out.println(md.toString());
-
+	*/
 	
     }
     
