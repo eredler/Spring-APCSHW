@@ -2,6 +2,7 @@ import java.util.*;
 
 public class MyDeque<T> {
     public Object[] d;
+    public int[] pri;
     public int size;
     public int head;
     public int tail;
@@ -10,6 +11,7 @@ public class MyDeque<T> {
 
     public MyDeque(){
 	d = new Object[10];
+	pri = new int[10];
 	size = 0;
 	head = 5;
 	tail = 4;
@@ -17,6 +19,7 @@ public class MyDeque<T> {
 
     public MyDeque(int n){
 	d = new Object[n];
+	pri = new int[n];
 	size = 0;
 	head = 0;
 	tail = 0;
@@ -47,6 +50,20 @@ public class MyDeque<T> {
 	return ans;
     }
 
+    public void add(T value, int priority){
+	if (size == d.length){
+	    grow();
+	    growPri();
+	}
+	head--;
+	if (head == -1){
+	    head = d.length-1;
+	}
+	d[head] = value;
+	pri[head] = priority;
+	size++;	
+    }
+
     public void addFirst(T value){
 	// when array is full, resize, then add
 	if (size == d.length){
@@ -72,6 +89,32 @@ public class MyDeque<T> {
 	}
 	d[tail] = value;
 	size++;
+    }
+
+    public T removeSmallest(){
+	try {	    
+	    if ((size <= d.length/4) && shrinkOn){
+		shrink();
+		shrinkPri();
+	    }
+	    size--;
+	    T smallestPri = pri[0];
+	    int smallestPriIndex = 0;
+	    for (int i = i; i < d.length; i++){
+		try {
+		    if (pri[i] < smallestPri){
+			smallestPriIndex = i;
+			smallestPri = pri[i];			
+		    }
+		} catch (NullPointerException e){}
+	    }
+	    T hold = (T)d[smallestPriIndex];
+	    d[smallestPriIndex] = null;
+	    pri[smallestPriIndex] = null;
+	    return hold;
+	} catch (NoSuchElementException e){
+	    throw new NoSuchElementException();
+	}
     }
 
     public T removeFirst(){
@@ -148,6 +191,25 @@ public class MyDeque<T> {
 	tail = x-1;
     }
 
+    public void growPri(){
+	// resize array (double) and copy to new array
+	int[] ans = new int[d.length*2];
+	int x = 0;
+	for (int i = head; i < d.length || i <= tail; i++){
+	    ans[x] = pri[i];
+	    x++;
+	} 
+	if (tail < head){
+	    for (int i = 0; i <= tail; i++){
+		ans[x] = pri[i];
+		x++;
+	    }
+	}
+	pri = ans;
+	head = 0;
+	tail = x-1;
+    }
+
     public void shrink(){
 	// resize array (half) and copy to new array
 	Object[] ans = new Object[d.length/2];
@@ -168,6 +230,30 @@ public class MyDeque<T> {
 	    }
 	}
 	d = ans;
+	head = 0;
+	tail = x-1;
+    }
+
+    public void shrinkPri(){
+	// resize array (half) and copy to new array
+	int[] ans = new int[d.length/2];
+	int x = 0;
+	if (head < tail){
+	    for (int i = head; i <= tail; i++){
+	    ans[x] = pri[i];
+	    x++;
+	    }
+	} else {
+	    for (int i = head; i < d.length; i++){
+		ans[x] = pri[i];
+		x++;
+	    } 
+	    for (int i = 0; i <= tail; i++){
+		ans[x] = pri[i];
+		x++;
+	    }
+	}
+	pri = ans;
 	head = 0;
 	tail = x-1;
     }
