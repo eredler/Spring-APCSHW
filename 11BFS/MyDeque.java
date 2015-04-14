@@ -109,8 +109,9 @@ public class MyDeque<T> {
 		} catch (NullPointerException e){}
 	    }
 	    T hold = (T)d[smallestPriIndex];
-	    d[smallestPriIndex] = null;
-	    pri[smallestPriIndex] = null;
+	    d[smallestPriIndex] = d[head];
+	    pri[smallestPriIndex] = pri[head];
+	    head++;
 	    return hold;
 	} catch (NoSuchElementException e){
 	    throw new NoSuchElementException();
