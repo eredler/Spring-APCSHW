@@ -1,6 +1,10 @@
 import java.util.*;
 import java.io.*;
 
+//
+// test with http://qiao.github.io/PathFinding.js/visual/
+//
+
 public class Maze {
 
     public char maze[][];

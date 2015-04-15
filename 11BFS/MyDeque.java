@@ -13,8 +13,8 @@ public class MyDeque<T> {
 	d = new Object[10];
 	pri = new Integer[10];
 	size = 0;
-	head = 5;
-	tail = 4;
+	head = 0;
+	tail = 0;
     }
 
     public MyDeque(int n){
@@ -31,14 +31,14 @@ public class MyDeque<T> {
 	}
 	String ans = "[" + d[head];
 	if (head <= tail){
-	    for (int i = head+1; i <= tail; i++){
+	    for (int i = head+1; i < tail; i++){
 		ans += ", " + d[i];
 	    }
 	    ans += "]";
 	    return ans;
 	}
 	int x = 1;
-	for (int i = head+1; i < d.length; i++){
+	for (int i = head+1; i <= d.length; i++){
 	    ans += ", " + d[x];
 	    x++;
 	}
@@ -48,20 +48,6 @@ public class MyDeque<T> {
 	}
 	ans += "]";
 	return ans;
-    }
-
-    public void add(T value, int priority){
-	if (size == d.length){
-	    grow();
-	    growPri();
-	}
-	head--;
-	if (head == -1){
-	    head = d.length-1;
-	}
-	d[head] = value;
-	pri[head] = priority;
-	size++;	
     }
 
     public void addFirst(T value){
@@ -91,74 +77,9 @@ public class MyDeque<T> {
 	size++;
     }
 
-    public T removeSmallest(){
-	try {	    
-	    if ((size <= d.length/4) && shrinkOn){
-		shrink();
-		shrinkPri();
-	    }
-	    size--;
-	    Integer smallestPri = pri[0];
-	    int smallestPriIndex = 0;
-	    while (smallestPri == null){
-		smallestPriIndex++;
-		smallestPri = pri[smallestPriIndex];
-	    }
-	    for (int i = 0; i < d.length; i++){
-		try {
-		    if (pri[i] < smallestPri){
-			smallestPriIndex = i;
-			smallestPri = pri[i];			
-		    }
-		} catch (NullPointerException e){
-		    // do nothing
-		}
-	    }
-	    T hold = (T)d[smallestPriIndex];
-	    d[smallestPriIndex] = d[head];
-	    pri[smallestPriIndex] = pri[head];
-	    head++;
-	    return hold;
-	} catch (NoSuchElementException e){
-	    throw new NoSuchElementException();
-	}
-    }
+  
 
- public T removeLargest(){
-	try {	    
-	    if ((size <= d.length/4) && shrinkOn){
-		shrink();
-		shrinkPri();
-	    }
-	    size--;
-	    Integer largestPri = pri[0];
-	    int largestPriIndex = 0;
-	    while (largestPri == null){
-		largestPriIndex++;
-		largestPri = pri[largestPriIndex];
-	    }
-	    for (int i = 1; i < d.length; i++){
-		try {
-		    if (pri[i] > largestPri){
-			largestPriIndex = i;
-			largestPri = pri[i];			
-		    }
-		} catch (NullPointerException e){}
-	    }
-	    System.out.println("largestPriIndex " + largestPriIndex);
-	    System.out.println("largestPri " + largestPri);
-	    System.out.println("head " + head);
-	    T hold = (T)d[largestPriIndex];
-	    System.out.println("dhead " + d[head]);
-	    d[largestPriIndex] = d[head];
-	    // System.out.println( Arrays.toString(d));
-	    pri[largestPriIndex] = pri[head];
-	    head++;
-	    return hold;
-	} catch (NoSuchElementException e){
-	    throw new NoSuchElementException();
-	}
-    }
+
 
     public T removeFirst(){
 	// throws NoSuchElementException
@@ -234,25 +155,7 @@ public class MyDeque<T> {
 	tail = x-1;
     }
 
-    public void growPri(){
-	// resize array (double) and copy to new array
-	Integer[] ans = new Integer[d.length*2];
-	int x = 0;
-	for (int i = head; i < d.length || i <= tail; i++){
-	    ans[x] = pri[i];
-	    x++;
-	} 
-	if (tail < head){
-	    for (int i = 0; i <= tail; i++){
-		ans[x] = pri[i];
-		x++;
-	    }
-	}
-	pri = ans;
-	head = 0;
-	tail = x-1;
-    }
-
+   
     public void shrink(){
 	// resize array (half) and copy to new array
 	Object[] ans = new Object[d.length/2];
@@ -277,6 +180,10 @@ public class MyDeque<T> {
 	tail = x-1;
     }
 
+  
+    //
+    // priority queue methods
+    //
     public void shrinkPri(){
 	// resize array (half) and copy to new array
 	Integer[] ans = new Integer[d.length/2];
@@ -301,6 +208,114 @@ public class MyDeque<T> {
 	tail = x-1;
     }
 
+    public void growPri(){
+	// resize array (double) and copy to new array
+	Integer[] ans = new Integer[d.length*2];
+	int x = 0;
+	for (int i = head; i < d.length || i <= tail; i++){
+	    ans[x] = pri[i];
+	    x++;
+	} 
+	if (tail < head){
+	    for (int i = 0; i <= tail; i++){
+		ans[x] = pri[i];
+		x++;
+	    }
+	}
+	pri = ans;
+	head = 0;
+	tail = x-1;
+    }
+
+    public T removeLargest(){
+	try {	    
+	    if ((size <= d.length/4) && shrinkOn){
+		shrink();
+		shrinkPri();
+	    }
+	    size--;
+	    Integer largestPri = pri[0];
+	    int largestPriIndex = 0;
+	    while (largestPri == null){
+		largestPriIndex++;
+		largestPri = pri[largestPriIndex];
+	    }
+	    for (int i = 1; i < d.length; i++){
+		try {
+		    if (pri[i] > largestPri){
+			largestPriIndex = i;
+			largestPri = pri[i];			
+		    }
+		} catch (NullPointerException e){
+		    // do nothing
+		}
+	    }
+	    //    System.out.println("largestPriIndex " + largestPriIndex);
+	    //	    System.out.println("largestPri " + largestPri);
+	    //   System.out.println("head " + head);
+	    T hold = (T)d[largestPriIndex];
+	    //   System.out.println("dhead " + d[head]);
+	    d[largestPriIndex] = d[head];
+	    // System.out.println( Arrays.toString(d));
+	    pri[largestPriIndex] = pri[head];
+	    head++;
+	    return hold;
+	} catch (NoSuchElementException e){
+	    throw new NoSuchElementException();
+	}
+    }
+
+    public T removeSmallest(){
+	try {	    
+	    if ((size <= d.length/4) && shrinkOn){
+		shrink();
+		shrinkPri();
+	    }
+	    size--;
+	    Integer smallestPri = pri[0];
+	    int smallestPriIndex = 0;
+	    while (smallestPri == null){
+		smallestPriIndex++;
+		smallestPri = pri[smallestPriIndex];
+	    }
+	    for (int i = 1; i < d.length; i++){
+		try {
+		    if (pri[i] < smallestPri){
+			smallestPriIndex = i;
+			smallestPri = pri[i];			
+		    }
+		} catch (NullPointerException e){
+		    // do nothing
+		}
+	    }
+	    T hold = (T)d[smallestPriIndex];
+	    d[smallestPriIndex] = d[head];
+	    pri[smallestPriIndex] = pri[head];
+	    head++;
+	    return hold;
+	} catch (NoSuchElementException e){
+	    throw new NoSuchElementException();
+	}
+    }
+
+    public void add(T value, int priority){
+	if (size == d.length){
+	    grow();
+	    growPri();
+	}
+	if (tail == d.length){
+	   tail = 0;
+	}
+	//	System.out.println("head " + head);
+	//	System.out.println(value);
+	d[tail] = value;
+	//	System.out.println(toString());
+	pri[tail] = priority;
+	size++;	
+	tail++;
+    }
+
+
     public static void main(String[]args){	
 	MyDeque<String> md = new MyDeque<String>();
 
@@ -322,13 +337,14 @@ public class MyDeque<T> {
 	md.add("carrot 6",6);
 	md.add("dinosaur 3",3);
 	md.add("emily 10",10);
-	System.out.println(md.toString()); // [emily, dinosaur, carrot, banana, apple]
+	//	md.add("foot 4",4);
+	System.out.println(md.toString()); // [apple, banana, carrot, dinosaur, emily]
 	System.out.println(md.removeSmallest()); // banana
-	System.out.println(md.toString()); // [emily, dinosaur, carrot, apple]
+	System.out.println(md.toString()); // [apple, carrot, dinosaur, emily]
 	System.out.println(md.removeSmallest()); // apple
-	System.out.println(md.toString()); // [emily, dinosaur, carrot]
+	System.out.println(md.toString()); // [carrot, dinosaur, emily]
 	System.out.println(md.removeLargest()); // emily
-	System.out.println(md.toString()); // [dinosaur, carrot]
+	System.out.println(md.toString()); // [carrot, dinosaur]
 	System.out.println(md.removeLargest()); // carrot
 	System.out.println(md.toString()); // [dinosaur]
 
