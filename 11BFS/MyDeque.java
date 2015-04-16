@@ -162,8 +162,8 @@ public class MyDeque<T> {
 	int x = 0;
 	if (head < tail){
 	    for (int i = head; i <= tail; i++){
-	    ans[x] = d[i];
-	    x++;
+		ans[x] = d[i];
+		x++;
 	    }
 	} else {
 	    for (int i = head; i < d.length; i++){
@@ -190,8 +190,8 @@ public class MyDeque<T> {
 	int x = 0;
 	if (head < tail){
 	    for (int i = head; i <= tail; i++){
-	    ans[x] = pri[i];
-	    x++;
+		ans[x] = pri[i];
+		x++;
 	    }
 	} else {
 	    for (int i = head; i < d.length; i++){
@@ -303,8 +303,8 @@ public class MyDeque<T> {
 	    grow();
 	    growPri();
 	}
-	if (tail == d.length){
-	   tail = 0;
+	if (tail >= d.length){
+	    tail = 0;
 	}
 	//	System.out.println("head " + head);
 	//	System.out.println(value);
@@ -315,6 +315,30 @@ public class MyDeque<T> {
 	tail++;
     }
 
+    public String priToString(){
+	if (debugPrint == true){
+	    return Arrays.toString(pri);
+	}
+	String ans = "[" + pri[head];
+	if (head <= tail){
+	    for (int i = head+1; i < tail; i++){
+		ans += ", " + pri[i];
+	    }
+	    ans += "]";
+	    return ans;
+	}
+	int x = 1;
+	for (int i = head+1; i <= pri.length; i++){
+	    ans += ", " + pri[x];
+	    x++;
+	}
+	for (int i = 0; i <= tail; i++){
+	    ans += ", " + pri[x];
+	    x++;
+	}
+	ans += "]";
+	return ans;
+    }
 
     public static void main(String[]args){	
 	MyDeque<String> md = new MyDeque<String>();
@@ -330,6 +354,7 @@ public class MyDeque<T> {
 
 	}
 
+	/*
 	// Testing for priority MyDeque
 	//
 	md.add("apple 1",1);
@@ -340,13 +365,14 @@ public class MyDeque<T> {
 	//	md.add("foot 4",4);
 	System.out.println(md.toString()); // [apple, banana, carrot, dinosaur, emily]
 	System.out.println(md.removeSmallest()); // banana
-	System.out.println(md.toString()); // [apple, carrot, dinosaur, emily]
+	System.out.println(md.toString()); // [apple, carrot, dinosaur, emily]	
 	System.out.println(md.removeSmallest()); // apple
 	System.out.println(md.toString()); // [carrot, dinosaur, emily]
 	System.out.println(md.removeLargest()); // emily
 	System.out.println(md.toString()); // [carrot, dinosaur]
 	System.out.println(md.removeLargest()); // carrot
 	System.out.println(md.toString()); // [dinosaur]
+	*/
 
 	/*
 	// Testing for REGULAR MyDeque
