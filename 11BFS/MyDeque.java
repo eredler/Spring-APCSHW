@@ -55,10 +55,10 @@ public class MyDeque<T> {
 	if (size == d.length){
 	    grow();
 	}
-	head--;
-	if (head == -1){
-	    head = d.length-1;
+	if (head <= 0){
+	    head = d.length;
 	}
+	
 	d[head] = value;
 	size++;
 	

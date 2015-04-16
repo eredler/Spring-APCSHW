@@ -146,11 +146,9 @@ public class Maze {
     }
 
     public boolean solve(int mode, boolean animate){
-
-	Frontier<Coordinate> frontier = new Frontier<Coordinate>(mode);
-
-	frontier.add(start);
-
+	System.out.println(start.toString());
+	Frontier<Coordinate> frontier = new Frontier<Coordinate>(mode,start);
+	System.out.println(frontier.toString());
 	solution = new ArrayList<Coordinate>();
 
 	while (frontier.isEmpty() == false){
@@ -159,9 +157,9 @@ public class Maze {
 		wait(20);
 		System.out.println(toString(animate));
 	    }
-
+	    System.out.println(frontier.toString());
 	    Coordinate current = frontier.remove();
-	    
+
 	    int x = current.getX();
 	    int y = current.getY();
 	    
@@ -177,7 +175,11 @@ public class Maze {
 		    }
 		    maze[solnPath.getY()][solnPath.getX()] = 'S';
 		    clearRest();
-		    System.out.println(toString());
+		    if (animate){
+			System.out.println(toString(false));
+		    } else {
+			System.out.println(toString(true));
+		    }
 		    if (!printNice){
 			String ans = "[ " + solution.get(0).getX() + ", " + solution.get(0).getY();
 			for (int i = 1; i < solution.size(); i++){
@@ -254,25 +256,25 @@ public class Maze {
 	public static void main(String[]args){
 	    String f = "no file";
 	    int mode = 0;
+	    boolean anim = false;
+
 	    try {
 		f = args[0];
 		mode = Integer.parseInt(args[1]);
 		if (mode != 0 && mode != 1){
 		    System.out.println("Mode not recognized (must be either 0 for BFS or 1 for DFS).");
 		}
+		if (Integer.parseInt(args[2]) == 0){
+		    anim = true;
+		}
 	    } catch (Exception e){
-		System.out.println("Gimme a file and mode (either 0 for BFS or 1 for DFS)!!!");
+		System.out.println("Gimme a file and mode (either 0 for BFS or 1 for DFS) and animate status (0 for animate, 1 for don't)!!!");
 		System.exit(0);
 	    }
 
 	    Maze m = new Maze(f);
 	    System.out.println(m.toString());
-	    m.solve(mode, true);
-	    //	} catch (FileNotFoundException e){
-	    //System.out.println("ERROR: Cannot run [2]");
-
-	    // throw new FileNotFoundException();
-	    //	}
+	    m.solve(mode, anim);
 	}
 
     }
