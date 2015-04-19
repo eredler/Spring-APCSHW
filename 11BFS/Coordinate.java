@@ -4,8 +4,10 @@ public class Coordinate {
     
     Coordinate prev = null;
 
-    int x = 0;
-    int y = 0;
+    private int steps = 0;
+
+    private int x = 0;
+    private int y = 0;
 
     public Coordinate(){
 	setX(0);
@@ -25,6 +27,10 @@ public class Coordinate {
 	y = _y;
     }
 
+    public void setSteps(int s){
+	steps = s;
+    }
+
     public void setPrev(Coordinate p){
 	prev = p;
     }
@@ -35,6 +41,10 @@ public class Coordinate {
 
     public int getY(){
 	return y;
+    }
+
+    public int getSteps(){
+	return steps;
     }
 
     public Coordinate getPrev(){

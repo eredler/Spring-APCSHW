@@ -13,6 +13,8 @@ public class Maze {
     private static final String hide = "\033[?25l";
     private static final String show = "\033[?25h";
 
+    private static final int Astar = 3;
+    private static final int best = 2;
     private static final int DFS = 1; // mode of 
     private static final int BFS = 0; // solving
 
@@ -140,18 +142,18 @@ public class Maze {
 	for (int y = 0; y < maxy; y++){
 	    for (int x = 0; x < maxx; x++){
 		if (!(maze[y][x] == 'E' || 
-		     maze[y][x] == WALL || 
-		     maze[y][x] == PATH ||
+		      maze[y][x] == WALL || 
+		      maze[y][x] == PATH ||
 		      maze[y][x] == 'S')){
-			maze[y][x] = ' ';
-		    }
+		    maze[y][x] = ' ';
+		}
 	    }
 	}
     }
 
     public boolean solve(int mode, boolean animate){
 	//	System.out.println(start.toString()+"YYYYYYYYYYYYYYYYYY");
-	Frontier<Coordinate> frontier = new Frontier<Coordinate>(mode,start);
+	Frontier<Coordinate> frontier = new Frontier<Coordinate>(mode,start,end.getX(),end.getY());
 	
 	solution = new ArrayList<Coordinate>();
 
@@ -210,6 +212,13 @@ public class Maze {
 		moreX.setPrev(current);
 		moreY.setPrev(current);
 
+		if (mode == Astar){
+		    lessX.setSteps(current.getSteps()+1);
+		    lessY.setSteps(current.getSteps()+1);
+		    moreX.setSteps(current.getSteps()+1);
+		    moreY.setSteps(current.getSteps()+1);
+		}
+
 		frontier.add(lessX);
 		frontier.add(lessY);
 		frontier.add(moreX);
@@ -225,60 +234,72 @@ public class Maze {
 	return false;
     }
 
-	/*Solve the maze using a frontier in a DFS manner.
-	 * When animate is true, print the board at each step of the algorithm.
-	 * Replace spaces with x's as you traverse the maze.
-	 */
+    /*Solve the maze using a frontier in a DFS manner.
+     * When animate is true, print the board at each step of the algorithm.
+     * Replace spaces with x's as you traverse the maze.
+     */
 
     
-	public boolean solveBFS(boolean animate){
-	    return solve(BFS,animate);
-	}
-
-	public boolean solveDFS(boolean animate){
-	    //	frontier.solve(animate,1);
-	    return solve(DFS,animate);
-	}
-
-	public boolean solveBFS(){
-	    return solveBFS(false);
-	}
-
-	public boolean solveDFS(){
-	    return solveDFS(false);
-	}
-
-	/*return an array [x1,y1,x2,y2,x3,y3...]
-	 *that contains the coordinates of the solution from start to end.
-	 *Precondition : solveBFS() OR solveDFS() has already been called (otherwise an empty array is returned)
-	 *Postcondition: the correct solution is in the returned array
-	 */
-
-	
-
-
-	public static void main(String[]args){
-	    String f = "no file";
-	    int mode = 0;
-	    boolean anim = false;
-
-	    try {
-		f = args[0];
-		mode = Integer.parseInt(args[1]);
-		if (mode != 0 && mode != 1){
-		    System.out.println("Mode not recognized (must be either 0 for BFS or 1 for DFS).");
-		}
-		if (Integer.parseInt(args[2]) == 0){
-		    anim = true;
-		}
-	    } catch (Exception e){
-		System.out.println("Gimme a file and mode (either 0 for BFS or 1 for DFS) and animate status (0 for animate, 1 for don't)!!!");
-		System.exit(0);
-	    }
-
-	    Maze m = new Maze(f);
-	    System.out.println(m.toString());
-	    m.solve(mode, anim);
-	}
-
+    public boolean solveBFS(boolean animate){
+	return solve(BFS,animate);
     }
+
+    public boolean solveDFS(boolean animate){
+	return solve(DFS,animate);
+    }
+
+    public boolean solveBest(boolean animate){
+	return solve(best,animate);
+    }
+    
+    public boolean solveAStar(boolean animate){
+	    return solve(Astar,animate);
+    }
+
+    public boolean solveBFS(){
+	return solveBFS(false);
+    }
+
+    public boolean solveDFS(){
+	return solveDFS(false);
+    }
+
+    public boolean solveBest(){
+	return solveBest(false);
+    }
+
+    public boolean solveAStar(){
+	return solveAStar(false);
+    }
+
+    /*return an array [x1,y1,x2,y2,x3,y3...]
+     *that contains the coordinates of the solution from start to end.
+     *Precondition : solveBFS() OR solveDFS() has already been called (otherwise an empty array is returned)
+     *Postcondition: the correct solution is in the returned array
+     */
+
+    public static void main(String[]args){
+	String f = "no file";
+	int mode = 0;
+	boolean anim = false;
+
+	try {
+	    f = args[0];
+	    mode = Integer.parseInt(args[1]);
+	    if (mode != 0 && mode != 1){
+		System.out.println("Mode not recognized (must be 0 for BFS, 1 for DFS, 2 for best first, or 3 for A*).");
+	    }
+	    if (Integer.parseInt(args[2]) == 0){
+		anim = true;
+	    }
+	} catch (Exception e){
+	    System.out.println("Gimme a (VALID!) file, mode (0 for BFS, 1 for DFS, 2 for best first, or 3 for A*) and animate status (0 for animate, 1 for don't)!!!");
+	    System.exit(0);
+	}
+
+	Maze m = new Maze(f);
+	System.out.println(m.toString());
+	m.solve(mode, anim);
+    }
+
+}
