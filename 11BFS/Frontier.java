@@ -12,7 +12,6 @@ public class Frontier<Coordinate> extends MyDeque{
 	mode = m;
 	dq = new MyDeque<Coordinate>();
 	add(start);
-	System.out.println(toString());
     }
 
     public void add(Coordinate c){

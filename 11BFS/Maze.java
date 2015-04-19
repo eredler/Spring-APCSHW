@@ -31,9 +31,9 @@ public class Maze {
 
     public boolean printNice = false;
 
-    /*    public void clearTerminal(){
-	  System.out.println(clear());
-	  }*/
+    public static final char WALL = '#';
+    public static final char FRONTIER = '*';
+    public static final char PATH = '.';
 
     public void wait(int millis){
 	try {
@@ -43,8 +43,8 @@ public class Maze {
 	}
     }
 
-    public void clearTerminal(){
-	System.out.println(clear);
+    private String color(int foreground,int background){
+	return ("\033[0;" + foreground + ";" + background + "m");
     }
 
     private String go(int x,int y){
@@ -108,7 +108,11 @@ public class Maze {
 	String ans = "";
 	for (int y = 0; y < maxy; y++){
 	    for (int x = 0; x < maxx; x++){
-		ans += maze[y][x] + " ";
+		if (maze[y][x] == '#'){
+		    ans +=/* color(38,47) + */maze[y][x] + " ";
+		} else {
+		    ans +=/* color(32,40) + */maze[y][x] + " ";
+		}
 		//	sop(ans);
 	    }
 	    ans += "\n";
@@ -119,7 +123,7 @@ public class Maze {
     //do the funky character codes when animate is true
     public String toString(boolean animate){
 	if (animate) {
-	    return hide+clear+go(0,0)+toString()+show;
+	    return hide+clear+go(0,0)+toString()+show;//+color(37,40);
 	} 
 	return this.toString();
     }
@@ -129,15 +133,15 @@ public class Maze {
     }
 
     public boolean goodSpot(int x, int y){
-	return !(maze[y][x] == '#' || maze[y][x] == '*');
+	return !(maze[y][x] == WALL || maze[y][x] == FRONTIER);
     }
 
     public void clearRest(){
 	for (int y = 0; y < maxy; y++){
 	    for (int x = 0; x < maxx; x++){
 		if (!(maze[y][x] == 'E' || 
-		     maze[y][x] == '#' || 
-		     maze[y][x] == '.' ||
+		     maze[y][x] == WALL || 
+		     maze[y][x] == PATH ||
 		      maze[y][x] == 'S')){
 			maze[y][x] = ' ';
 		    }
@@ -146,9 +150,9 @@ public class Maze {
     }
 
     public boolean solve(int mode, boolean animate){
-	System.out.println(start.toString());
+	//	System.out.println(start.toString()+"YYYYYYYYYYYYYYYYYY");
 	Frontier<Coordinate> frontier = new Frontier<Coordinate>(mode,start);
-	System.out.println(frontier.toString());
+	
 	solution = new ArrayList<Coordinate>();
 
 	while (frontier.isEmpty() == false){
@@ -157,9 +161,9 @@ public class Maze {
 		wait(20);
 		System.out.println(toString(animate));
 	    }
-	    System.out.println(frontier.toString());
+	    //	    System.out.println(frontier.toString());
 	    Coordinate current = frontier.remove();
-
+	    
 	    int x = current.getX();
 	    int y = current.getY();
 	    
@@ -169,7 +173,7 @@ public class Maze {
 		    Coordinate solnPath = end.getPrev();
 		    
 		    while (solnPath.getPrev() != null){
-			maze[solnPath.getY()][solnPath.getX()] = '.';
+			maze[solnPath.getY()][solnPath.getX()] = PATH;
 			solution.add(solnPath);
 			solnPath = solnPath.getPrev();
 		    }
@@ -194,7 +198,7 @@ public class Maze {
 		
 		}
 		
-		maze[y][x] = '*';
+		maze[y][x] = FRONTIER;
 		
 		Coordinate lessX = new Coordinate(x-1,y);
 		Coordinate lessY = new Coordinate(x,y-1);

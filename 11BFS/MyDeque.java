@@ -13,16 +13,16 @@ public class MyDeque<T> {
 	d = new Object[10];
 	pri = new Integer[10];
 	size = 0;
-	head = 0;
-	tail = 0;
+	head = 5;
+	tail = 4;
     }
 
     public MyDeque(int n){
 	d = new Object[n];
 	pri = new Integer[n];
 	size = 0;
-	head = 0;
-	tail = 0;
+	head = 5;
+	tail = 4;
     }
 
     public String toString(){
@@ -31,7 +31,7 @@ public class MyDeque<T> {
 	}
 	String ans = "[" + d[head];
 	if (head <= tail){
-	    for (int i = head+1; i < tail; i++){
+	    for (int i = head+1; i <= tail; i++){
 		ans += ", " + d[i];
 	    }
 	    ans += "]";
@@ -58,7 +58,7 @@ public class MyDeque<T> {
 	if (head <= 0){
 	    head = d.length;
 	}
-	
+	head--;
 	d[head] = value;
 	size++;
 	
@@ -258,6 +258,8 @@ public class MyDeque<T> {
 	    d[largestPriIndex] = d[head];
 	    // System.out.println( Arrays.toString(d));
 	    pri[largestPriIndex] = pri[head];
+	    d[head] = null;
+	    pri[head] = null;
 	    head++;
 	    return hold;
 	} catch (NoSuchElementException e){
@@ -291,6 +293,8 @@ public class MyDeque<T> {
 	    T hold = (T)d[smallestPriIndex];
 	    d[smallestPriIndex] = d[head];
 	    pri[smallestPriIndex] = pri[head];
+	    //    d[head] = null;
+	    //	    pri[head] = null;
 	    head++;
 	    return hold;
 	} catch (NoSuchElementException e){
@@ -303,31 +307,23 @@ public class MyDeque<T> {
 	    grow();
 	    growPri();
 	}
-	if (tail >= d.length){
-	    tail = 0;
-	}
-	//	System.out.println("head " + head);
-	//	System.out.println(value);
-	d[tail] = value;
-	//	System.out.println(toString());
-	pri[tail] = priority;
-	size++;	
-	tail++;
+	addFirst(value);
+	pri[head] = priority;
     }
 
     public String priToString(){
 	if (debugPrint == true){
 	    return Arrays.toString(pri);
 	}
-	String ans = "[" + pri[head];
+	String ans = "[" + d[head];
 	if (head <= tail){
-	    for (int i = head+1; i < tail; i++){
+	    for (int i = head+1; i <= tail; i++){
 		ans += ", " + pri[i];
 	    }
 	    ans += "]";
 	    return ans;
 	}
-	int x = 1;
+	int x = 0;
 	for (int i = head+1; i <= pri.length; i++){
 	    ans += ", " + pri[x];
 	    x++;
@@ -345,7 +341,7 @@ public class MyDeque<T> {
 
 	try {
 	    if (Integer.parseInt(args[0]) == 1){
-		md.debugPrint = true;
+		md.debugPrint = false;
 	    } 
 	    if (Integer.parseInt(args[1]) == 1){
 		md.shrinkOn = true;
@@ -354,7 +350,7 @@ public class MyDeque<T> {
 
 	}
 
-	/*
+	
 	// Testing for priority MyDeque
 	//
 	md.add("apple 1",1);
@@ -372,9 +368,9 @@ public class MyDeque<T> {
 	System.out.println(md.toString()); // [carrot, dinosaur]
 	System.out.println(md.removeLargest()); // carrot
 	System.out.println(md.toString()); // [dinosaur]
-	*/
+	
 
-	/*
+	/*	
 	// Testing for REGULAR MyDeque
 	//
 	md.addFirst("hi");
@@ -393,7 +389,6 @@ public class MyDeque<T> {
 	System.out.println(md.getFirst()); // emily
 	System.out.println(md.removeLast()); // jelly
 	System.out.println(md.getLast()); // redler
-	System.out.println(md.toString());
 	*/
 	
     }
