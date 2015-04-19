@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-public class Frontier<Coordinate> extends MyDeque{
+public class Frontier<Coordinate> {
     //keep track of where you've been
 
     public MyDeque<Coordinate> dq = new MyDeque<Coordinate>();
@@ -19,9 +19,10 @@ public class Frontier<Coordinate> extends MyDeque{
     public Frontier(int m, Coordinate start, int ex, int ey){
 	mode = m;
 	dq = new MyDeque<Coordinate>();
-	add(start);
 	endx = ex;
 	endy = ey;
+	add(start);
+
     }
 
     public void add(Coordinate c){
