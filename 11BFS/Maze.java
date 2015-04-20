@@ -37,6 +37,8 @@ public class Maze {
     public static final char FRONTIER = '*';
     public static final char PATH = '.';
 
+    public Frontier frontier;
+
     public void wait(int millis){
 	try {
 	    Thread.sleep(millis);
@@ -153,8 +155,11 @@ public class Maze {
 
     public boolean solve(int mode, boolean animate){
 	//	System.out.println(start.toString()+"YYYYYYYYYYYYYYYYYY");
-	Frontier<Coordinate> frontier = new Frontier<Coordinate>(mode,start,end.getX(),end.getY());
-	
+	frontier = new Frontier(mode,end.getX(),end.getY());
+	frontier.add(start);
+	if (mode == Astar || mode == best){
+	    frontier.setPQ(true);
+	}
 	solution = new ArrayList<Coordinate>();
 
 	while (frontier.isEmpty() == false){
@@ -201,23 +206,28 @@ public class Maze {
 		}
 		
 		maze[y][x] = FRONTIER;
-		
-		Coordinate lessX = new Coordinate(x-1,y);
-		Coordinate lessY = new Coordinate(x,y-1);
-		Coordinate moreX = new Coordinate(x+1,y);
-		Coordinate moreY = new Coordinate(x,y+1);
 
+		Coordinate lessX;
+		Coordinate lessY;
+		Coordinate moreX;
+		Coordinate moreY;
+		
+		if (mode == Astar){
+		    lessX = new Coordinate(x-1,y,current.getSteps()+1);
+		    lessY = new Coordinate(x,y-1,current.getSteps()+1);
+		    moreX = new Coordinate(x+1,y,current.getSteps()+1);
+		    moreY = new Coordinate(x,y+1,current.getSteps()+1);
+		} else {
+		    lessX = new Coordinate(x-1,y);
+		    lessY = new Coordinate(x,y-1);
+		    moreX = new Coordinate(x+1,y);
+		    moreY = new Coordinate(x,y+1);
+		    }
+		
 		lessX.setPrev(current);
 		lessY.setPrev(current);
 		moreX.setPrev(current);
 		moreY.setPrev(current);
-
-		if (mode == Astar){
-		    lessX.setSteps(current.getSteps()+1);
-		    lessY.setSteps(current.getSteps()+1);
-		    moreX.setSteps(current.getSteps()+1);
-		    moreY.setSteps(current.getSteps()+1);
-		}
 
 		frontier.add(lessX);
 		frontier.add(lessY);
@@ -286,7 +296,7 @@ public class Maze {
 	try {
 	    f = args[0];
 	    mode = Integer.parseInt(args[1]);
-	    if (mode != 0 && mode != 1){
+	    if (mode < 0 || mode > 3){
 		System.out.println("Mode not recognized (must be 0 for BFS, 1 for DFS, 2 for best first, or 3 for A*).");
 	    }
 	    if (Integer.parseInt(args[2]) == 0){

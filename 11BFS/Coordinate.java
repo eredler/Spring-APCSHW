@@ -20,6 +20,12 @@ public class Coordinate {
 	setY(_y);
     }
 
+    public Coordinate(int _x, int _y, int s){
+	setX(_x);
+	setY(_y);
+	setSteps(s);
+    }
+
     public void setX(int _x){
 	x = _x;
     }
@@ -34,6 +40,10 @@ public class Coordinate {
 
     public void setPrev(Coordinate p){
 	prev = p;
+    }
+
+    public int foo() {
+	return 99;
     }
 
     public int getX(){

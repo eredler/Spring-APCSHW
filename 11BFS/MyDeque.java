@@ -9,6 +9,8 @@ public class MyDeque<T> {
     public boolean shrinkOn = false;
     public boolean debugPrint = false;
 
+    public boolean priorityQ = false;
+
     public MyDeque(){
 	d = new Object[10];
 	pri = new Integer[10];
@@ -23,6 +25,10 @@ public class MyDeque<T> {
 	size = 0;
 	head = 5;
 	tail = 4;
+    }
+
+    public void setPriQ(boolean b){
+	priorityQ = b;
     }
 
     public String toString(){
@@ -139,18 +145,28 @@ public class MyDeque<T> {
     public void grow(){
 	// resize array (double) and copy to new array
 	Object[] ans = new Object[d.length*2];
+	Integer[] ansPri = new Integer[d.length*2];
 	int x = 0;
 	for (int i = head; i < d.length || i <= tail; i++){
 	    ans[x] = d[i];
+	    if (priorityQ){
+		ansPri[x] = pri[i];
+	    }
 	    x++;
 	} 
 	if (tail < head){
 	    for (int i = 0; i <= tail; i++){
 		ans[x] = d[i];
+		if (priorityQ){
+		    ansPri[x] = pri[i];
+		}
 		x++;
 	    }
 	}
 	d = ans;
+	if (priorityQ){
+	    pri = ansPri;
+	}
 	head = 0;
 	tail = x-1;
     }
@@ -210,21 +226,14 @@ public class MyDeque<T> {
 
     public void growPri(){
 	// resize array (double) and copy to new array
-	Integer[] ans = new Integer[d.length*2];
-	int x = 0;
-	for (int i = head; i < d.length || i <= tail; i++){
-	    ans[x] = pri[i];
-	    x++;
-	} 
-	if (tail < head){
-	    for (int i = 0; i <= tail; i++){
-		ans[x] = pri[i];
-		x++;
-	    }
+	Integer[] ans = new Integer[pri.length*2];
+	System.out.println("XXXXXXXXXXXXXXXXXXXXXXXX");
+	for (int i = 0; i <= pri.length/2; i++){
+	    ans[i] = pri[i];
 	}
 	pri = ans;
-	head = 0;
-	tail = x-1;
+	//	head = 0;
+	//	tail = x-1;
     }
 
     public T removeLargest(){
@@ -305,7 +314,6 @@ public class MyDeque<T> {
     public void add(T value, int priority){
 	if (size == d.length){
 	    grow();
-	    growPri();
 	}
 	addFirst(value);
 	pri[head] = priority;
@@ -337,6 +345,7 @@ public class MyDeque<T> {
     }
 
     public static void main(String[]args){	
+	/*
 	MyDeque<String> md = new MyDeque<String>();
 
 	try {
@@ -349,8 +358,9 @@ public class MyDeque<T> {
 	} catch (ArrayIndexOutOfBoundsException e){
 
 	}
+	*/
 
-	
+	/*	
 	// Testing for priority MyDeque
 	//
 	md.add("apple 1",1);
@@ -368,7 +378,7 @@ public class MyDeque<T> {
 	System.out.println(md.toString()); // [carrot, dinosaur]
 	System.out.println(md.removeLargest()); // carrot
 	System.out.println(md.toString()); // [dinosaur]
-	
+	*/
 
 	/*	
 	// Testing for REGULAR MyDeque

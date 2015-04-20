@@ -1,10 +1,10 @@
 import java.util.*;
 import java.io.*;
 
-public class Frontier<Coordinate> {
+public class Frontier {
     //keep track of where you've been
 
-    public MyDeque<Coordinate> dq = new MyDeque<Coordinate>();
+    public MyDeque<Coordinate> dq;
 
     private int Astar = 3;
     private int best = 2;
@@ -16,13 +16,15 @@ public class Frontier<Coordinate> {
     public int endx;
     public int endy;
 
-    public Frontier(int m, Coordinate start, int ex, int ey){
+    public Frontier(int m, int ex, int ey){
 	mode = m;
 	dq = new MyDeque<Coordinate>();
 	endx = ex;
 	endy = ey;
-	add(start);
+    }
 
+    public void setPQ(boolean b){
+	dq.setPriQ(b);
     }
 
     public void add(Coordinate c){
