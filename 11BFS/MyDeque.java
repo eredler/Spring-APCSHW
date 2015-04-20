@@ -224,18 +224,6 @@ public class MyDeque<T> {
 	tail = x-1;
     }
 
-    public void growPri(){
-	// resize array (double) and copy to new array
-	Integer[] ans = new Integer[pri.length*2];
-	
-	for (int i = 0; i <= size; i++){
-	    ans[i] = pri[i];
-	}
-	pri = ans;
-	//	head = 0;
-	//	tail = x-1;
-    }
-
     public T removeLargest(){
 	try {	    
 	    if ((size <= d.length/4) && shrinkOn){
@@ -259,17 +247,16 @@ public class MyDeque<T> {
 		    // do nothing
 		}
 	    }
-	    //    System.out.println("largestPriIndex " + largestPriIndex);
-	    //	    System.out.println("largestPri " + largestPri);
-	    //   System.out.println("head " + head);
 	    T hold = (T)d[largestPriIndex];
-	    //   System.out.println("dhead " + d[head]);
 	    d[largestPriIndex] = d[head];
-	    // System.out.println( Arrays.toString(d));
 	    pri[largestPriIndex] = pri[head];
 	    d[head] = null;
-	    pri[head] = null;
-	    head++;
+	    pri[head] = null;	    
+	    if (head >= d.length){
+		head = 0;
+	    } else {
+		head++;
+	    }
 	    return hold;
 	} catch (NoSuchElementException e){
 	    throw new NoSuchElementException();
@@ -286,7 +273,7 @@ public class MyDeque<T> {
 	    Integer smallestPri = pri[0];
 	    int smallestPriIndex = 0;
 	    while (smallestPri == null){
-		if (MyDeque.length==0){
+		if (d.length==0){
 		    System.exit(0);
 		} else {
 		smallestPriIndex++;
@@ -304,11 +291,16 @@ public class MyDeque<T> {
 		}
 	    }
 	    T hold = (T)d[smallestPriIndex];
+	    System.out.println(head);
 	    d[smallestPriIndex] = d[head];
 	    pri[smallestPriIndex] = pri[head];
-	    //    d[head] = null;
-	    //	    pri[head] = null;
-	    head++;
+	    d[head] = null;
+	    pri[head] = null;	    
+	    if (head >= d.length-1){
+		head = 0;
+	    } else {
+		head++;
+	    }
 	    return hold;
 	} catch (NoSuchElementException e){
 	    throw new NoSuchElementException();
@@ -321,6 +313,11 @@ public class MyDeque<T> {
 	}
 	addFirst(value);
 	pri[head] = priority;
+	if (head == 0){
+	    head = d.length-1;
+	} else {
+	    head--;
+	}
     }
 
     public String priToString(){
