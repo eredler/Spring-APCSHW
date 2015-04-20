@@ -12,8 +12,8 @@ public class MyDeque<T> {
     public boolean priorityQ = false;
 
     public MyDeque(){
-	d = new Object[10];
-	pri = new Integer[10];
+	d = new Object[100];
+	pri = new Integer[100];
 	size = 0;
 	head = 5;
 	tail = 4;
@@ -227,8 +227,8 @@ public class MyDeque<T> {
     public void growPri(){
 	// resize array (double) and copy to new array
 	Integer[] ans = new Integer[pri.length*2];
-	System.out.println("XXXXXXXXXXXXXXXXXXXXXXXX");
-	for (int i = 0; i <= pri.length/2; i++){
+	
+	for (int i = 0; i <= size; i++){
 	    ans[i] = pri[i];
 	}
 	pri = ans;
@@ -286,8 +286,12 @@ public class MyDeque<T> {
 	    Integer smallestPri = pri[0];
 	    int smallestPriIndex = 0;
 	    while (smallestPri == null){
+		if (MyDeque.length==0){
+		    System.exit(0);
+		} else {
 		smallestPriIndex++;
 		smallestPri = pri[smallestPriIndex];
+		}
 	    }
 	    for (int i = 1; i < d.length; i++){
 		try {
