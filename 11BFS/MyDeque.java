@@ -44,12 +44,12 @@ public class MyDeque<T> {
 	    return ans;
 	}
 	int x = 1;
-	for (int i = head+1; i <= d.length; i++){
-	    ans += ", " + d[x];
+	for (int i = head+1; i < d.length; i++){
+	    ans += ", " + d[i];
 	    x++;
 	}
 	for (int i = 0; i <= tail; i++){
-	    ans += ", " + d[x];
+	    ans += ", " + d[i];
 	    x++;
 	}
 	ans += "]";
@@ -273,13 +273,12 @@ public class MyDeque<T> {
 	    Integer smallestPri = pri[0];
 	    int smallestPriIndex = 0;
 	    while (smallestPri == null){
-		if (d.length==0){
-		    System.exit(0);
-		} else {
+		if (smallestPriIndex == d.length-1){
+		    smallestPriIndex = -1;
+		}
 		smallestPriIndex++;
 		smallestPri = pri[smallestPriIndex];
-		}
-	    }
+	    }	    
 	    for (int i = 1; i < d.length; i++){
 		try {
 		    if (pri[i] < smallestPri){
@@ -291,7 +290,6 @@ public class MyDeque<T> {
 		}
 	    }
 	    T hold = (T)d[smallestPriIndex];
-	    System.out.println(head);
 	    d[smallestPriIndex] = d[head];
 	    pri[smallestPriIndex] = pri[head];
 	    d[head] = null;

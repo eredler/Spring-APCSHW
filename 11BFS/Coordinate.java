@@ -42,10 +42,6 @@ public class Coordinate {
 	prev = p;
     }
 
-    public int foo() {
-	return 99;
-    }
-
     public int getX(){
 	return x;
     }

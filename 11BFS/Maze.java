@@ -34,8 +34,8 @@ public class Maze {
     public boolean printNice = false;
 
     public static final char WALL = '#';
-    public static final char FRONTIER = '*';
-    public static final char PATH = '.';
+    public static final char FRONTIER = 'X';
+    public static final char PATH = '@';
 
     public Frontier frontier;
 
@@ -165,7 +165,7 @@ public class Maze {
 	while (frontier.isEmpty() == false){
 	    
 	    if (animate){
-		wait(20);
+		wait(5);
 		System.out.println(toString(animate));
 	    }
 	    //	    System.out.println(frontier.toString());
