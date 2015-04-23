@@ -160,7 +160,7 @@ public class BTree<E> {
 	System.out.println( "Height: " + t.getHeight() );
 	*/
 
-	System.out.println( t );
+	System.out.println( t.root.getValue() );
     }
 }
 
