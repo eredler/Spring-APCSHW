@@ -1,8 +1,14 @@
+import java.util.*;
+
 public class BTree<E> {
 
     public static final int PRE_ORDER = 0;
     public static final int IN_ORDER = 1;
     public static final int POST_ORDER = 2;   
+
+    public static final int rSeed = 1;
+
+    Random r = new Random(rSeed);
 
     private TreeNode<E> root;
 
@@ -18,8 +24,12 @@ public class BTree<E> {
       ====================*/     
     public void add( E d ) {
 	TreeNode<E> bn = new TreeNode<E>(d);
-	TreeNode<E> curr = new TreeNode<E>(root);
-	add(curr,bn);
+	if (root == null){
+	    root = new TreeNode<E>(d);
+	} else {
+	    TreeNode<E> curr = root;
+	    add(curr,bn);
+	}
     }
 
     /*======== public void add() ==========
@@ -36,6 +46,9 @@ public class BTree<E> {
     private void add( TreeNode<E> curr, TreeNode<E> bn ) {
 	if (curr.room()){
 	    curr.kids.add(bn);
+	} else {
+	    curr = curr.kids.get(r.nextInt(curr.kids.size()));
+	    add(curr,bn);
 	}
     }
     
@@ -138,16 +151,16 @@ public class BTree<E> {
 
 	for ( int i=0; i < 8; i++ ) 
 	    t.add( i );
-	System.out.println( "Pre-order: ");
+	/*	System.out.println( "Pre-order: ");
 	t.traverse( PRE_ORDER );
 	System.out.println( "In-order: ");
 	t.traverse( IN_ORDER );
 	System.out.println( "Post-order: ");
 	t.traverse( POST_ORDER );
 	System.out.println( "Height: " + t.getHeight() );
+	*/
 
 	System.out.println( t );
     }
 }
 
-}

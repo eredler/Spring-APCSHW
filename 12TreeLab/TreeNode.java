@@ -1,9 +1,10 @@
+import java.util.*;
+
 public class TreeNode<E> {
 
     private E value;
     private TreeNode<E> prev;
-    private ArrayList<TreeNode<E>> kids;
-    private int numKids;
+    public ArrayList<TreeNode<E>> kids;
     private int maxKids;
 
     public void setValue(E v){
@@ -22,14 +23,6 @@ public class TreeNode<E> {
 	return prev;
     }
 
-    public void setNumKids(int nk){
-	numKids = nk;
-    }
-
-    public int getNumKids(){
-	return numKids;
-    }
-
     public void setMaxKids(int mk){
 	maxKids = mk;
     }
@@ -39,7 +32,7 @@ public class TreeNode<E> {
     }
 
     public boolean room(){
-	if (nk >= mk){
+	if (kids.size() >= maxKids){
 	    return false;
 	}
 	return true;
@@ -48,7 +41,6 @@ public class TreeNode<E> {
     public TreeNode(){
 	setValue(null);
 	setPrev(null);
-	setNumKids(0);
 	setMaxKids(2);
 	kids = new ArrayList<TreeNode<E>>();
     }
@@ -56,46 +48,27 @@ public class TreeNode<E> {
     public TreeNode(E v){
 	setValue(v);
 	setPrev(null);
-	setNumKids(0);
 	setMaxKids(2);
 	kids = new ArrayList<TreeNode<E>>();
     }
 
-    public TreeNode(E v, ink mk){
+    public TreeNode(E v, int mk){
 	setValue(v);
 	setPrev(null);
-	setNumKids(0);
-	setMaxKids(mk);
-    }
-
-    public TreeNode(E v, int mk, int nk){
-	setValue(v);
-	setPrev(null);
-	setNumKids(nk);
 	setMaxKids(mk);
 	kids = new ArrayList<TreeNode<E>>();
     }
 
     public TreeNode(E v, TreeNode<E> p){
 	setValue(v);
-	setPrev(p);	
-	setNumKids(0);
+	setPrev(p);
 	setMaxKids(2);
 	kids = new ArrayList<TreeNode<E>>();
     }
 
     public TreeNode(E v, TreeNode<E> p, int mk){
 	setValue(v);
-	setPrev(p);	
-	setNumKids(0);
-	setMaxKids(mk);
-	kids = new ArrayList<TreeNode<E>>();
-    }
-    
-    public TreeNode(E v, TreeNode<E> p, int mk, int nk){
-	setValue(v);
-	setPrev(p);	
-	setNumKids(nk);
+	setPrev(p);
 	setMaxKids(mk);
 	kids = new ArrayList<TreeNode<E>>();
     }
