@@ -65,10 +65,26 @@ public class BTree<E> {
       Inputs:   TreeNode<E> curr  
       Returns: 
       
-      Prints out the elements in the tree by doing an
+      Prints out the elements in the tree by doing a
       pre-order Traversal
       ====================*/
     public void preOrder( TreeNode<E> curr ) {
+	String ans = "";
+	ans = preOrderHelp(curr,ans);
+	System.out.println(ans);
+    }
+
+    public String preOrderHelp(TreeNode<E> curr, String ans){
+	ans += curr.getValue();
+	System.out.println(curr.kids.toString());
+	if (!curr.hasKids()){
+	    return ans;
+	}
+	for (int i = 0; i < curr.kids.size(); i++){
+	    curr = curr.kids.get(i);
+	    ans += preOrderHelp(curr,ans);
+	}
+	return ans;
     }
 
 
@@ -106,12 +122,20 @@ public class BTree<E> {
       Returns:  The height of the tree rooted at node curr
       
       ====================*/
-    public int getHeight( TreeNode<E> curr ) {
-	return -1;
+    public int getHeight(TreeNode<E> curr){
+	return getHeight(curr,0);
+    }
+
+    public int getHeight( TreeNode<E> curr, int ans ) {
+	while (curr.hasKids()){
+	    curr = curr.kids.get(0);
+	    ans = getHeight(curr,ans) + 1;
+	}
+	return ans;
     }
 
     /*======== public String getLevel() ==========
-      Inputs:   TreeNode<E> curr
+      Inputs:   TreeNode<E> curr, int currLevel
       int level
       int currLevel  
       Returns: A string containing all the elements on the
@@ -151,16 +175,16 @@ public class BTree<E> {
 
 	for ( int i=0; i < 8; i++ ) 
 	    t.add( i );
-	/*	System.out.println( "Pre-order: ");
+	System.out.println( "Pre-order: ");
 	t.traverse( PRE_ORDER );
-	System.out.println( "In-order: ");
-	t.traverse( IN_ORDER );
-	System.out.println( "Post-order: ");
-	t.traverse( POST_ORDER );
-	System.out.println( "Height: " + t.getHeight() );
-	*/
+	//	System.out.println( "In-order: ");
+	//	t.traverse( IN_ORDER );
+	//	System.out.println( "Post-order: ");
+	//	t.traverse( POST_ORDER );
+	//	System.out.println( "Height: " + t.getHeight() );
+	
 
-	System.out.println( t.root.getValue() );
+	//	System.out.println( t.root.getValue() );
     }
 }
 
