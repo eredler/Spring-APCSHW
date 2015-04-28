@@ -4,8 +4,8 @@ public class TreeNode<E> {
 
     private E value;
     private TreeNode<E> prev;
-    public ArrayList<TreeNode<E>> kids;
-    private int maxKids = 2;
+    public TreeNode<E> left = null;
+    public TreeNode<E> right = null;
 
     public void setValue(E v){
 	value = v;
@@ -15,6 +15,30 @@ public class TreeNode<E> {
 	return value;
     }
 
+    public boolean hasLeft(){
+	return (left != null);
+    }
+
+    public boolean hasRight(){
+	return (right != null);
+    }
+    
+    public TreeNode<E> getLeft(){
+	return left;
+    }
+    
+    public TreeNode<E> getRight(){
+	return right;
+    }
+
+    public void setLeft(TreeNode<E> l){
+	left = l;
+    }
+    
+    public void setRight(TreeNode<E> r){
+	right = r;
+    }
+    
     public void setPrev(TreeNode<E> p){
 	prev = p;
     }
@@ -24,43 +48,32 @@ public class TreeNode<E> {
     }
 
     public boolean hasKids(){
-	if (kids.size() > 0){
+	if (left != null || right != null){
+	    return true;
+	}
+	return false;
+    }
+
+    public boolean room(){
+	if (left == null || right == null){
 	    return true;
 	}
 	return false;
     }
     
-    public void setMaxKids(int mk){
-	maxKids = mk;
-    }
-
-    public int getMaxKids(){
-	return maxKids;
-    }
-
-    public boolean room(){
-	if (kids.size() >= maxKids){
-	    return false;
-	}
-	return true;
-    }
-    
     public TreeNode(){
 	setValue(null);
 	setPrev(null);
-	kids = new ArrayList<TreeNode<E>>();
     }
 
     public TreeNode(E v){
 	setValue(v);
 	setPrev(null);
-	kids = new ArrayList<TreeNode<E>>();
     }
 
     public TreeNode(E v, TreeNode<E> p){
 	setValue(v);
 	setPrev(p);
-	kids = new ArrayList<TreeNode<E>>();
     }
 
 }

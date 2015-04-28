@@ -45,9 +45,17 @@ public class BTree<E> {
       ====================*/
     private void add( TreeNode<E> curr, TreeNode<E> bn ) {
 	if (curr.room()){
-	    curr.kids.add(bn);
+	    if (r.nextInt(2) == 0){
+		curr.setLeft(bn);
+	    } else {
+		curr.setRight(bn);
+	    }
 	} else {
-	    curr = curr.kids.get(r.nextInt(curr.kids.size()));
+	    if (r.nextInt(2) == 0){
+		curr = curr.getLeft();
+	    } else {
+		curr = curr.getRight();
+	    }
 	    add(curr,bn);
 	}
     }
@@ -68,25 +76,17 @@ public class BTree<E> {
       Prints out the elements in the tree by doing a
       pre-order Traversal
       ====================*/
-    public void preOrder( TreeNode<E> curr ) {
-	String ans = "";
-	ans = preOrderHelp(curr,ans);
-	System.out.println(ans);
-    }
-
-    public String preOrderHelp(TreeNode<E> curr, String ans){
-	ans += curr.getValue();
-	System.out.println(curr.kids.toString());
-	if (!curr.hasKids()){
-	    return ans;
+    public void preOrder(TreeNode<E> curr){
+	if (curr == null){
+	    return;
+	} else if (!curr.hasKids()) {
+	    System.out.println(curr.getValue());
+	    return;
 	}
-	for (int i = 0; i < curr.kids.size(); i++){
-	    curr = curr.kids.get(i);
-	    ans += preOrderHelp(curr,ans);
-	}
-	return ans;
+	//	System.out.println(curr);
+	preOrder(curr.getLeft());
+	preOrder(curr.getRight());
     }
-
 
     /*======== public void inOrder() ==========
       Inputs:   TreeNode<E> curr  
@@ -127,8 +127,12 @@ public class BTree<E> {
     }
 
     public int getHeight( TreeNode<E> curr, int ans ) {
-	while (curr.hasKids()){
-	    curr = curr.kids.get(0);
+	if (curr.hasKids()){
+	    if (curr.getLeft() != null){
+		curr = curr.getLeft();
+	    } else {
+		curr = curr.getRight();
+	    }
 	    ans = getHeight(curr,ans) + 1;
 	}
 	return ans;
@@ -142,7 +146,7 @@ public class BTree<E> {
       given level, ordered left -> right
       
       ====================*/
-    private String getLevel( TreeNode<E> curr, int level, int currLevel ) {
+    private String getLevel( TreeNode<E> curr, int level) {
 	return "";
     }
     
@@ -175,6 +179,7 @@ public class BTree<E> {
 
 	for ( int i=0; i < 8; i++ ) 
 	    t.add( i );
+	System.out.println(t.getHeight());
 	System.out.println( "Pre-order: ");
 	t.traverse( PRE_ORDER );
 	//	System.out.println( "In-order: ");
