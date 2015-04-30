@@ -44,4 +44,8 @@ public class BSTreeNode<T extends Comparable> {
     public void setNumOf(int n){
 	numOf = n;
     }
+
+    public int compareTo(BSTreeNode<T> b){
+
+    }
 }
