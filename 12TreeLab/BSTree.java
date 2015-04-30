@@ -36,9 +36,9 @@ public class BSTree <T extends Comparable> {
     private BSTreeNode<T> add(BSTreeNode<T> curr, BSTreeNode<T> t) {
 	if (curr == null){
 	    return t;
-	} else if (/*T IS LESS THAN CURR, SO GO LEFT*/){
+	} else if (/*T IS LESS THAN CURR, SO GO LEFT -- compareTo*/){
 	    curr.setLeft(add(curr.getLeft,t));
-	} else if (/*T IS GREATER THAN CURR, SO GO RIGHT*/){
+	} else if (/*T IS GREATER THAN CURR, SO GO RIGHT -- compareTo*/){
 	    curr.setRight(add(curr.getRight,t));
 	} else {
 	    // t is equal to curr
