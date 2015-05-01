@@ -38,10 +38,10 @@ public class BSTree <T extends Comparable> {
 	    return t;
 	} else if (t.compareTo(curr) < 0){
 	    curr.setLeft(add(curr.getLeft(),t));
-	} else if (t.compareTo(curr) >= 0){
+	} else {
 	    curr.setRight(add(curr.getRight(),t));
 	}
-	return t;
+	return curr;
     }
 
     /*======== public void remove() ==========
