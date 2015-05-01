@@ -36,7 +36,7 @@ public class BSTree <T extends Comparable> {
     private BSTreeNode<T> add(BSTreeNode<T> curr, BSTreeNode<T> t) {
 	if (curr == null){
 	    return t;
-	} else if (t.compareTo(curr) < 0){
+	} else if (t.getData().compareTo(curr.getData()) < 0){
 	    curr.setLeft(add(curr.getLeft(),t));
 	} else {
 	    curr.setRight(add(curr.getRight(),t));
