@@ -36,7 +36,7 @@ public class BSTree <T extends Comparable> {
     private BSTreeNode<T> add(BSTreeNode<T> curr, BSTreeNode<T> t) {
 	if (curr == null){
 	    return t;
-	} else if (t.getData().compareTo(curr.getData()) < 0){
+	} else if (curr.getData().compareTo(t.getData()) > 0){
 	    curr.setLeft(add(curr.getLeft(),t));
 	} else {
 	    curr.setRight(add(curr.getRight(),t));
@@ -88,8 +88,12 @@ public class BSTree <T extends Comparable> {
     public void inOrderHelper( BSTreeNode<T> t ) {
 	if (t == null) 
 	    return;
+	else if (!t.hasLeft() && !t.hasRight()) {
+	    System.out.println(t.toString());
+	    return;
+	}
 	inOrderHelper( t.getLeft() );
-	System.out.print( t.getData() + " ");
+	System.out.println(t);
 	inOrderHelper( t.getRight() );
     }
 
@@ -139,48 +143,23 @@ public class BSTree <T extends Comparable> {
 	return result;
     }
 
-    /*
-      getLevel will produce a String for each level of the tree.
-      The resulting Strings will look like this:
-
-      ._______________________________
-      ._______________._______________
-      ._______._______._______._______
-      .___.___.___.___.___.___.___.___
-      ._._._._._._._._._._._._._._._._
-
-      toString will combine those Strings and provide an output that
-      will look like this:
-
-      _______________.
-      _______._______________.
-      ___._______._______._______.
-      _.___.___.___.___.___.___.___.
-      ._._._._._._._._._._._._._._._.
-      In these diagrams, each dot represents wordLength characters,
-      each underscore represents wordLength spaces, and, for any nodes
-      that are null, the dots will be "replaced" by underscores.
-    */
-
     private String getLevel(BSTreeNode<T> curr, int currLevel, int targetLevel, int height, int wordLength) {
-	if (currLevel == 1){
+	if (currLevel == 1)
 	    return curr.toString() + spaces(wordLength - curr.toString().length()) +
 		spaces(wordLength * Math.pow(2, height - targetLevel + 1) - wordLength);
-	}
 	String result = "";
 	if (curr.getLeft() != null){
 	    result += getLevel(curr.getLeft(), currLevel - 1, targetLevel, height, wordLength);
-	}else{
+	} else {
 	    result += spaces(wordLength * Math.pow(2, height - targetLevel + currLevel - 1));
 	}
 	if (curr.getRight() != null){
 	    result += getLevel(curr.getRight(), currLevel - 1, targetLevel, height, wordLength);
-	}else{ 
-	    result += spaces(wordLength * Math.pow(2, height - targetLevel + currLevel - 1));
+	} else {result += spaces(wordLength * Math.pow(2, height - targetLevel + currLevel - 1));
 	}
 	return result;
     }
-		
+
     public String toString() {
 	if (root == null)
 	    return "";
@@ -188,7 +167,7 @@ public class BSTree <T extends Comparable> {
 	int height = getHeight();
 	int wordLength = maxLength();
 	// add the every level of the tree except the last one
-	for (int level = 1; level < height; level++){
+	for (int level = 1; level < height; level++) {
 	    // remove extra spaces from the end of each level's String to prevent lines from
 	    // getting unnecessarily long and add spaces to the front of each level's String
 	    // to keep everything centered
@@ -198,20 +177,27 @@ public class BSTree <T extends Comparable> {
 	}
 	// now add the last level (level = height)
 	result += getLevel(root, height, height, height, wordLength).replaceFirst("\\s+$", "");
-				
 	return result;
     }
+
     
 
     public static void main( String[] args ) {
 
 	BSTree bst = new BSTree();
 
-	for (int i = 0; i < 10; i++){
-	    bst.add(i);
-	}
-
-	System.out.println(bst.toString());
+	bst.add(4);
+	bst.add(1);
+	bst.add(9);
+	bst.add(5);
+	bst.add(2);
+	bst.add(7);
+	//	bst.add(6);
+	//	bst.add(7);
+	//	bst.add(8);
+	//	bst.add(9);
+	bst.inOrder();
+	System.out.println(bst);
 	
     }
 

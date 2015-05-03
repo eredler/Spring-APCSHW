@@ -24,6 +24,12 @@ public class BSTreeNode<T extends Comparable> {
     public BSTreeNode<T> getRight() {
 	return right;
     }
+    public boolean hasLeft(){
+	return getLeft() != null;
+    }
+    public boolean hasRight(){
+	return getRight() != null;
+    }
     //mutators
     public void setData( T d ) {
 	data = d;
@@ -41,7 +47,7 @@ public class BSTreeNode<T extends Comparable> {
 	return vMe.compareTo(vYou);
     }*/
 
-    public String toString(){
+     public String toString(){
 	return this.getData().toString();
     }
 
