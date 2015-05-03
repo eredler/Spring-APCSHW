@@ -63,7 +63,87 @@ public class BSTree <T extends Comparable> {
       curr, if it exists.
       ====================*/
     private BSTreeNode<T> remove( BSTreeNode<T> curr, T c ) {
-	return null;
+	System.out.println("curr: " + curr + "  remove: " + c);
+	if (curr == null){
+	    System.out.println("curr == null");
+	    return curr;
+	}
+	if (curr.getLeft() != null && curr.getLeft().getData() == c){
+	    System.out.println("curr.getLeft() is what we want to remove");
+	    if (!curr.getLeft().hasLeft() && !curr.getLeft().hasRight()){
+		System.out.println("curr.getLeft() is a leaf");
+		curr.setLeft(null);
+		return root;
+	    } else if (curr.getLeft().hasLeft() && !curr.getLeft().hasRight()){
+		System.out.println("curr.getLeft() has a left but no right");
+		BSTreeNode<T> x = curr.getLeft().getLeft();
+		curr.setLeft(curr.getLeft().getLeft());
+		return curr;		
+	    } else if (curr.getLeft().hasRight() && !curr.getLeft().hasLeft()) {
+		System.out.println("curr.getLeft() has a right but no left");
+		BSTreeNode<T> x = curr.getLeft().getRight();
+		curr.setLeft(curr.getLeft().getRight());
+		return curr;		
+	    } else {
+		System.out.println("curr.getLeft() has 2 kids");
+		BSTreeNode<T> x = curr.getLeft().getRight();
+		System.out.println("WOOT " + curr);
+		while (x.hasLeft()){
+		    x = x.getLeft();
+		}
+		System.out.println(x + " is our new sub-root");
+		x.setLeft(curr.getLeft().getLeft());
+		BSTreeNode<T> y = curr.getLeft().getLeft();		
+		System.out.println(y + " HELLO");
+		y.setLeft(null);
+		x.setLeft(y);
+		curr.setLeft(x);
+		return root;
+	    }
+	} else if (curr.getRight() != null && curr.getRight().getData() == c){
+	    System.out.println("curr.getRight() is what we want to remove");
+	    if (!curr.getRight().hasLeft() && !curr.getRight().hasRight()){
+		System.out.println("curr.getRight() is a leaf");
+		curr.setRight(null);
+		return root;
+	    } else if (curr.getRight().hasLeft() && !curr.getRight().hasRight()){
+		System.out.println("curr.getRight() has a left but no right");
+		BSTreeNode<T> x = curr.getRight().getLeft();
+		curr.setRight(curr.getRight().getLeft());
+		return curr;		
+	    } else if (curr.getRight().hasRight() && !curr.getRight().hasLeft()) {
+		System.out.println("curr.getRight() has a right but no left");
+		BSTreeNode<T> x = curr.getRight().getRight();
+		curr.setRight(curr.getRight().getRight());
+		return curr;		
+	    } else {
+		System.out.println("curr.getRight() has 2 kids");
+		BSTreeNode<T> x = curr.getRight().getLeft();
+		
+		System.out.println("WOOT " + curr);
+		while (x.hasRight()){
+		    x = x.getRight();
+		}
+		System.out.println(x + " is our new sub-root");
+		x.setRight(curr.getRight().getRight());
+		BSTreeNode<T> y = curr.getRight().getLeft();
+		y.setRight(null);
+		x.setLeft(y);
+		curr.setRight(x);
+		return root;
+	    }
+	} else {
+	    System.out.println("neither of curr's kids is what we want to remove");
+	    if (curr.getData().compareTo(c) > 0){
+		System.out.println("what we want to remove is less than curr");
+		curr = curr.getLeft();
+	    } else {
+		System.out.println("what we want to remove is more than curr");
+		curr = curr.getRight();
+	    }
+	    System.out.println("try this again on " + curr);
+	    return remove(curr,c);
+	}
     }
 
 
@@ -191,7 +271,16 @@ public class BSTree <T extends Comparable> {
 	bst.add(9);
 	bst.add(5);
 	bst.add(2);
-	bst.add(7);
+	bst.add(8);
+	bst.add(10);
+	bst.add(0);
+	bst.add(-20);
+	bst.add(-3);
+	bst.add(-21);
+	
+	bst.inOrder();
+	System.out.println(bst);
+	bst.remove(1);
 	//	bst.add(6);
 	//	bst.add(7);
 	//	bst.add(8);
