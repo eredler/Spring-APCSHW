@@ -1,0 +1,24 @@
+public class MyHeap {
+
+    private ArrayList<Integer> heap;
+
+    final static boolean MAX_HEAP = true;
+    final static boolean MIN_HEAP = false;
+
+    public boolean mode;
+
+    public MyHeap() {
+	mode = MAX_HEAP;
+	heap = new ArrayList<Integer>();
+    }
+
+    public MyHeap(boolean isMax){
+	mode = isMax;
+    }
+
+    public String toString(){
+	return Arrays.toString(this);
+    }
+    
+
+}
