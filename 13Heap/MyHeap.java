@@ -2,7 +2,7 @@ import java.util.*;
 
 public class MyHeap {
 
-    private ArrayList<Integer> heap;
+    private int[] heap;
 
     final static boolean MAX_HEAP = true;
     final static boolean MIN_HEAP = false;
@@ -13,13 +13,13 @@ public class MyHeap {
 
     public MyHeap() {
 	mode = MAX_HEAP;
-	heap = new ArrayList<Integer>();
+	heap = new int[10];
 	size = 0;
     }
 
     public MyHeap(boolean m){
 	mode = m;
-	heap = new ArrayList<Integer>();
+	heap = new int[10];
 	size = 0;
     }
 
@@ -35,10 +35,10 @@ public class MyHeap {
 	return index/2;
     }
     
-    private void swap(int firstIndex, Integer secondIndex){
-	Integer hold = heap.get(firstIndex);
-	heap.set(firstIndex,heap.get(secondIndex));
-	heap.set(secondIndex,hold);
+    private void swap(int firstIndex, int secondIndex){
+	int hold = heap[firstIndex];
+	heap[firstIndex] = heap[secondIndex];
+	heap[secondIndex] = hold;
     }
 
     private void swapHelp(int index){
@@ -62,14 +62,17 @@ public class MyHeap {
 
     private boolean compare(int x, int y){
 	if (mode == MAX_HEAP){
-	    return (heap.get(x) > heap.get(y));
+	    return (heap[x] > heap[y]);
 	} else {
-	    return (heap.get(x) < heap.get(y));
+	    return (heap[x] < heap[y]);
 	}
     }
 
     public String toString() {
-	return heap.toString();
+	if (size == 0){
+	    return "[]";
+	}
+	return (Arrays.toString(Arrays.copyOfRange(heap,0,size)));
     }
     
 
@@ -77,36 +80,45 @@ public class MyHeap {
 	if (size == 0){
 	    throw new NoSuchElementException();
 	}
-	Integer hold = heap.get(1);
-	heap.set(1,heap.get(size));
+	Integer hold = heap[0];
+	heap[0] = heap[size];
 	pushUp(1);
 	size--;
 	return hold;
     }
 
     public void add(Integer v){
-	heap.set(size+1,v);
+	heap[size+1] = v;
 	swapHelp(size+1);
 	size++;
+	resize();
+    }
+
+    private void resize() {
+	if (size == heap.length - 1) {
+	    heap = Arrays.copyOf(heap, size * 2);
+	} else if (size < heap.length / 2 && size > 10) {
+	    heap = Arrays.copyOf(heap, heap.length / 2);
+    }
     }
 
     public int peek(){
 	if (size == 0){
 	    throw new NoSuchElementException();
 	}
-	return heap.get(1);
+	return heap[0];
     }
 
     public static void main(String[]args){
-	MyHeap h = new MyHeap();
-	System.out.println(h); 
+	MyHeap h = new MyHeap(); 
 	h.add(3);
-	System.out.println(h); 
 	h.add(10);
 	h.add(5);
 	h.add(7);
 	h.add(-8);
-	System.out.println(h);    
+	System.out.println(h); 
+	h.remove();
+	System.out.println(h); 
     }
 
 }
