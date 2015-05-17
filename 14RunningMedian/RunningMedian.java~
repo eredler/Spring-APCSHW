@@ -1,0 +1,7 @@
+public class RunningMedian{
+
+    public String name {
+	return "Redler, Emily";
+    }
+
+}
