@@ -11,6 +11,10 @@ public class MyHeap {
 
     public int size;
 
+    public String name(){
+	return "Redler, Emily";
+    }
+
     public MyHeap() {
 	mode = MAX_HEAP;
 	heap = new int[10];
@@ -35,18 +39,18 @@ public class MyHeap {
 	return index/2;
     }
     
-    private void swap(int firstIndex, int secondIndex){
+    private void literallyJustSwap(int firstIndex, int secondIndex){
 	int hold = heap[firstIndex];
 	heap[firstIndex] = heap[secondIndex];
 	heap[secondIndex] = hold;
     }
 
-    private void swapHelp(int index){
+    private void complicatedSwap(int index){
 	if (index == 0){
 	    return;
 	} else if (compare(index,getParent(index))){
-	    swap(index,getParent(index));
-	    swapHelp(getParent(index));
+	    literallyJustSwap(index,getParent(index));
+	    complicatedSwap(getParent(index));
 	}
     }
 
@@ -55,7 +59,7 @@ public class MyHeap {
 	    return;
 	}
 	if (!compare(index,getLeft(index))){
-	    swap(index,getLeft(index));
+	    literallyJustSwap(index,getLeft(index));
 	    pushUp(getLeft(index));
 	}
     }   
@@ -74,7 +78,6 @@ public class MyHeap {
 	}
 	return (Arrays.toString(Arrays.copyOfRange(heap,0,size)));
     }
-    
 
     public Integer remove(){
 	if (size == 0){
@@ -89,7 +92,7 @@ public class MyHeap {
 
     public void add(Integer v){
 	heap[size+1] = v;
-	swapHelp(size+1);
+	complicatedSwap(size+1);
 	size++;
 	resize();
     }
