@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class RunningMedian{
 
     final static boolean MAX_HEAP = true;
@@ -6,15 +8,15 @@ public class RunningMedian{
     MyHeap max;
     MyHeap min;
     
-    public ArrayList<int> median;
+    public ArrayList<Integer> median;
  
     public RunningMedian(){
 	max = new MyHeap(MAX_HEAP);
 	min = new MyHeap(MIN_HEAP);
-	median = new ArrayList<int>();
+	median = new ArrayList<Integer>();
     }
 
-    public findMedian(){
+    public int findMedian(){
 	if (median.size() == 0){
 	    return (max.peek() + min.peek()) /2;
 	} else {
@@ -23,16 +25,16 @@ public class RunningMedian{
     }
 
     public void add(int v){
-	if (max.size < 1 || min.size < 1){
-	    median.set(0,v);
+	if (max.size < 1 && min.size < 1 && median.size() < 1){
+	    median.add(v);
 	} else {
 	    if (median.size() < 1){
 		if (v < max.peek()){
 		    max.add(v);
-		    median.set(0,max.remove());
+		    median.add(max.remove());
 		} else {
 		    min.add(v);
-		    median.set(0,min.remove());
+		    median.add(min.remove());
 		}
 	    } else {
 		if (median.get(0) > v){
@@ -46,21 +48,30 @@ public class RunningMedian{
 	}
     }
 
-    public String name {
+    public String name() {
 	return "Redler, Emily";
     }
 
     public String toString(){
-	return getMedian().toString();
+	String ans = "";
+	ans += findMedian();
+	return ans;
+    }
+
+    public String debug(){
+	return "Max: " + max.toString() + "\n" + "Median: " + median.toString() + "\n" + "Min: " + min.toString();
     }
 
     public static void main(String[]args){
 	RunningMedian r = new RunningMedian();
 	
-	r.add(3);
+	r.add(4);
 	r.add(8);
 	r.add(2);
+	r.add(7);
+	r.add(5);
 	System.out.println(r.toString());
+	System.out.println(r.debug());
 	
     }
 
