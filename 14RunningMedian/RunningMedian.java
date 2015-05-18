@@ -16,7 +16,7 @@ public class RunningMedian{
 	median = new ArrayList<Integer>();
     }
 
-    public int findMedian(){
+    public int getMedian(){
 	if (median.size() == 0){
 	    return (max.peek() + min.peek()) /2;
 	} else {
@@ -54,7 +54,7 @@ public class RunningMedian{
 
     public String toString(){
 	String ans = "";
-	ans += findMedian();
+	ans += getMedian();
 	return ans;
     }
 
